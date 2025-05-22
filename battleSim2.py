@@ -389,11 +389,6 @@ How to play:
 - When fighting you can type the shortcuts in parentheses '()'
 - Defeat the enemy before they defeat you!
 - You can cycle through pages with "<" or ">"
-
-V0.6.0:
-- Adding save data
-    - Number of games played
-    - saves based on used player name
 ___________________________________________________
 '''
 
