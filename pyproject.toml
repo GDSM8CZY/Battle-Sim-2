@@ -1,0 +1,14 @@
+[project]
+name = "battlesim2"
+version = "1.0.0"
+description = "A command-line battle simulation game"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = []
+
+[project.scripts]
+battlesim2 = "battlesim2.__main__:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
