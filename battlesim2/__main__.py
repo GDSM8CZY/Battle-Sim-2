@@ -681,5 +681,5 @@ def main():
 
     input("press ENTER to end program ")
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     main()
