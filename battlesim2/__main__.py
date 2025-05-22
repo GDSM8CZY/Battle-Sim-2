@@ -273,98 +273,99 @@ def listToMatrix(list, col):
         matrix.append(list[start:end])
     return matrix
 
+# dictionary of all of the swords
+swordsDict = {
+    "short sword": Weapon(
+        name= "Short Sword",
+        dmgRange= (3, 5),
+        range= (1, 3),
+        critChance= 50,
+        critDmg= 2,
+        accuracy= 90,
+        multiHit= 2
+    ),
+    "claymore": Weapon(
+        name= "Claymore",
+        dmgRange= (4, 5),
+        range= (1, 5),
+        critChance= 20,
+        critDmg= 3,
+        accuracy= 65,
+        multiHit= 1
+    ),
+    "dagger": Weapon(
+        name= "Dagger",
+        dmgRange= (4, 5),
+        range= (1, 2),
+        critChance= 80,
+        critDmg= 2,
+        accuracy= 90,
+        multiHit= 4
+    ),
+    "knuckles": Weapon(
+        name= "Knuckles",
+        dmgRange= (6, 7),
+        range= (1, 2),
+        critChance= 10,
+        critDmg= 2,
+        accuracy= 90,
+        multiHit= 1
+    ),
+}
+
+# dictionary of all of the bows
+bowsDict = {
+    "hunting bow": Weapon(
+        name= "Hunting Bow",
+        dmgRange= (1, 3),
+        range= (5, 8),
+        critChance= 30,
+        critDmg= 2,
+        accuracy= 50,
+        multiHit= 3
+    ),
+    "crossbow": Weapon(
+        name= "Crossbow",
+        dmgRange= (5, 6),
+        range= (8, 10),
+        critChance= 50,
+        critDmg= 2,
+        accuracy= 80,
+        multiHit= 1
+    ),
+    "revolver": Weapon(
+        name= "Revolver",
+        dmgRange= (2, 3),
+        range= (5, 10),
+        critChance= 25,
+        critDmg= 2,
+        accuracy= 30,
+        multiHit= 6
+    ),
+    "slingshot": Weapon(
+        name= "Slingshot",
+        dmgRange= (5, 7),
+        range= (3, 6),
+        critChance= 75,
+        critDmg= 3,
+        accuracy= 40,
+        multiHit= 1
+    ),
+    "tomahawk": Weapon(
+        name= "Tomahawk",
+        dmgRange= (6, 8),
+        range= (1, 6),
+        critChance= 10,
+        critDmg= 3,
+        accuracy= 40,
+        multiHit= 1
+    ),
+
+}
+
 
 # main function
 def main():
-    # dictionary of all of the swords
-    swordsDict = {
-        "short sword": Weapon(
-            name= "Short Sword",
-            dmgRange= (3, 5),
-            range= (1, 3),
-            critChance= 50,
-            critDmg= 2,
-            accuracy= 90,
-            multiHit= 2
-        ),
-        "claymore": Weapon(
-            name= "Claymore",
-            dmgRange= (4, 5),
-            range= (1, 5),
-            critChance= 20,
-            critDmg= 3,
-            accuracy= 65,
-            multiHit= 1
-        ),
-        "dagger": Weapon(
-            name= "Dagger",
-            dmgRange= (4, 5),
-            range= (1, 2),
-            critChance= 80,
-            critDmg= 2,
-            accuracy= 90,
-            multiHit= 4
-        ),
-        "knuckles": Weapon(
-            name= "Knuckles",
-            dmgRange= (6, 7),
-            range= (1, 2),
-            critChance= 10,
-            critDmg= 2,
-            accuracy= 90,
-            multiHit= 1
-        ),
-    }
-
-    # dictionary of all of the bows
-    bowsDict = {
-        "hunting bow": Weapon(
-            name= "Hunting Bow",
-            dmgRange= (1, 3),
-            range= (5, 8),
-            critChance= 30,
-            critDmg= 2,
-            accuracy= 50,
-            multiHit= 3
-        ),
-        "crossbow": Weapon(
-            name= "Crossbow",
-            dmgRange= (5, 6),
-            range= (8, 10),
-            critChance= 50,
-            critDmg= 2,
-            accuracy= 80,
-            multiHit= 1
-        ),
-        "revolver": Weapon(
-            name= "Revolver",
-            dmgRange= (2, 3),
-            range= (5, 10),
-            critChance= 25,
-            critDmg= 2,
-            accuracy= 30,
-            multiHit= 6
-        ),
-        "slingshot": Weapon(
-            name= "Slingshot",
-            dmgRange= (5, 7),
-            range= (3, 6),
-            critChance= 75,
-            critDmg= 3,
-            accuracy= 40,
-            multiHit= 1
-        ),
-        "tomahawk": Weapon(
-            name= "Tomahawk",
-            dmgRange= (6, 8),
-            range= (1, 6),
-            critChance= 10,
-            critDmg= 3,
-            accuracy= 40,
-            multiHit= 1
-        ),
-
-    }
 
     # clear anything previously in the terminal
     os.system('cls' if os.name == 'nt' else 'clear')
