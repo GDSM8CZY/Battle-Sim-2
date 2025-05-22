@@ -131,10 +131,10 @@ class Fighter():
     def write(self):
         # creats stats file if not already created
         try:
-            f = open(f"~/BattleSim2-stats{self.name}-stats", "x")
+            f = open(f"{self.name}-stats", "x")
             # opens stats file if created
         except:
-            f = open(f"~/BattleSim2-stats{self.name}-stats", "w")
+            f = open(f"{self.name}-stats", "w")
 
         # writes to stats file
         f.write(f"{self.gamesPlayed}\n{self.lastSword}\n{self.lastBow}")
@@ -143,8 +143,10 @@ class Fighter():
         # try and read stats from the file
         while True:
             try:
-                f = open(f"~/BattleSim2-stats{self.name}-stats", "r")
+                f = open(f"{self.name}-stats", "r")
                 self.gamesPlayed = int(f.readline())
+                self.lastSword = f.readline()
+                self.lastBow = f.readline()
                 break
             except:
                 self.write()
