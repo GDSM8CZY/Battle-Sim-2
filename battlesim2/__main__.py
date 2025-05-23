@@ -130,7 +130,7 @@ class Fighter():
 
     def write(self):
         # create saves file if it doesn't exsist
-        if !os.path.isdir("../saves"):
+        if not os.path.isdir("../saves"):
             os.mkdir("../saves")
 
         # creats stats file if not already created
