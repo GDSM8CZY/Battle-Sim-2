@@ -365,6 +365,9 @@ bowsDict = {
 
 }
 
+# define player and enemy as global variables
+Player = 0
+Enemy = 0
 
 # main function
 def main():
