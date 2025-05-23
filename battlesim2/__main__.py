@@ -370,8 +370,8 @@ bowsDict = {
 }
 
 # define player and enemy as global variables
-Player = 0
-Enemy = 0
+Player = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], "player")
+Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], "enemy")
 
 # main function
 def main():
