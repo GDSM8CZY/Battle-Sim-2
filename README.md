@@ -22,3 +22,7 @@ pipx example:
 ```terminal
 pipx install git+https://github.com/GDSM8CZY/BattleSim2.git
 ```
+Then to play typr in terminal
+```terminal
+battlesim2
+```
