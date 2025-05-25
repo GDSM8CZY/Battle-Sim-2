@@ -129,16 +129,12 @@ class Fighter():
         return f"{self.name}: ..."
 
     def write(self):
-        # create saves file if it doesn't exsist
-        if not os.path.isdir("../saves"):
-            os.mkdir("../saves")
-
         # creats stats file if not already created
         try:
-            f = open(f"../saves/{self.name}-stats", "x")
+            f = open(f"{self.name}-stats", "x")
             # opens stats file if created
         except:
-            f = open(f"../saves/{self.name}-stats", "w")
+            f = open(f"{self.name}-stats", "w")
 
         # writes to stats file
         f.write(f"{self.gamesPlayed}\n{self.lastSword}\n{self.lastBow}")
@@ -147,7 +143,7 @@ class Fighter():
         # try and read stats from the file
         while True:
             try:
-                f = open(f"../saves/{self.name}-stats", "r")
+                f = open(f"{self.name}-stats", "r")
                 self.gamesPlayed = int(f.readline())
                 self.lastSword = f.readline()
                 self.lastBow = f.readline()
@@ -369,10 +365,6 @@ bowsDict = {
 
 }
 
-# define player and enemy as global variables
-Player = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], "player")
-Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], "enemy")
-
 # main function
 def main():
 
@@ -470,14 +462,20 @@ def main():
 
 
     # gives player the selected weapons
+    global Player
     Player = Fighter(swordSelect, bowSelect, playerName)
     Player.read(False)
 
     # gives enemies random weapons
+    global Enemy
     Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], enemyName)
     Enemy.randomWeapons()
 
     # variables needed to start the game
+    # IDK why they may need to be re declared
+    global distance 
+    global playerTurn 
+    global playing 
     distance = 10
     playerTurn = True
     playing = True
