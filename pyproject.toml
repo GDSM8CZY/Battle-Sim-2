@@ -7,7 +7,7 @@ requires-python = ">=3.7"
 dependencies = []
 
 [project.scripts]
-battlesim2 = "battlesim2.__main__:main"
+battlesim2 = "battlesim2.cli:main"
 
 [build-system]
 requires = ["setuptools", "wheel"]
