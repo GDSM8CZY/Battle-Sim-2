@@ -13,7 +13,7 @@ def weaponInfo(weapon):
         weapon {Weapon} - the weapon that is being inspected
       return:
         none
-      '''
+    '''
     print("_"*20)
     print(f"_-{weapon.name}-_")
     print(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Dammage-")
@@ -292,7 +292,7 @@ def playGame():
                 weaponInfo(Player.sword)
                 weaponInfo(Player.bow)
                 print("_"*20)
-                print("Enemy Weapons:")
+                print(f"{Enemy.name} Weapons:")
                 sleep(1)
                 weaponInfo(Enemy.sword)
                 weaponInfo(Enemy.bow)
@@ -325,7 +325,7 @@ def playGame():
             sleep(int(behaviorRandom/10))
             # 80% chance to not attack
             if Enemy.sword.inRange(distance) and behaviorRandom > 20:
-                print("-The Enemy Attacks!-")
+                print(f"-{Enemy.name} Attacks!-")
                 sleep(1)
                 # for the ammount of time the sword hits
                 for hit in list(range(Enemy.sword.multiHit)):
@@ -354,7 +354,7 @@ def playGame():
                 playerTurn = True
             # 80% chance to not attack
             elif Enemy.bow.inRange(distance) and behaviorRandom > 20:
-                print("-The Enemy Attacks!-")
+                print(f"-{Enemy.name} Attacks!-")
                 sleep(1)
                 # for the ammount of times the bow hits
                 for hit in list(range(Enemy.bow.multiHit)):
