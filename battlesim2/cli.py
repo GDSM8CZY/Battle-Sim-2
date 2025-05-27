@@ -210,7 +210,7 @@ def playGame():
             hitDmg = 0
             # get player input
             print("What do you want to do?")
-            playerIn = input("Attack (A) | Chase (C) | Run (R) | Weapon Info (I) | Wait (W) | Clear (CLS) | Quit (Q)" + "\n").lower()
+            playerIn = input("Attack (A) | Chase (C) | Run (R) | Weapon Info (I) | Wait (W) | Quit (Q)" + "\n").lower()
 
             # When the player wants to attack
             if playerIn == "attack" or playerIn == "a":
@@ -305,9 +305,6 @@ def playGame():
                 print("-You wait for the opponent-")
                 print(Player.taunt(Enemy))
                 playerTurn = False
-            elif playerIn == "clear" or playerIn == "cls":
-                # clear all text from terminal
-                os.system('cls' if os.name == 'nt' else 'clear')
             # incase the player types something that is not accepted
             else:
                 print("-Something went wrong-")
@@ -316,6 +313,10 @@ def playGame():
         if checkWin():
             Player.gamesPlayed += 1
             break
+
+        input("Press ENTER to clear")
+        # Clear the sceren after the turn
+        os.system('cls' if os.name == 'nt' else 'clear')
 
         # Enemy turn logic
         while not playerTurn:
@@ -405,6 +406,10 @@ def playGame():
         if checkWin():
             Player.gamesPlayed += 1
             break
+
+        input("Press ENTER to clear")
+        # Clear the sceren after the turn
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     input("Press ENTER to end")
 

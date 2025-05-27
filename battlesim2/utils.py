@@ -42,7 +42,8 @@ How to play:
 - Type in the option you want to select
 - When fighting you can type the shortcuts in parentheses '()'
 - Defeat the enemy before they defeat you!
-- You can cycle through pages with "<" or ">"
+- Pages are indicated by <#>
+- Cycle through pages with "<" or ">"
 
 Look at the GitHub!: https://github.com/GDSM8CZY/BattleSim2
 ___________________________________________________
