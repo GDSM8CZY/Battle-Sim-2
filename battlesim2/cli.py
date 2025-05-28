@@ -314,7 +314,7 @@ def playGame():
             Player.gamesPlayed += 1
             break
 
-        input("Press ENTER to clear")
+        input("Press ENTER to continue")
         # Clear the sceren after the turn
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -407,7 +407,7 @@ def playGame():
             Player.gamesPlayed += 1
             break
 
-        input("Press ENTER to clear")
+        input("Press ENTER to continue")
         # Clear the sceren after the turn
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -429,7 +429,7 @@ def main():
         print(title)
 
         # get input
-        select = input("(S) Start Game\n(H) Help\n(Q) Quit\n").lower()
+        select = input("(S) Start Game\n(H) Help\n(I) Weapon Info\n(Q) Quit\n").lower()
 
         # do specified action
         if select == "s" or select == "start game":
@@ -441,7 +441,21 @@ def main():
             # clear anything previously in the terminal
             os.system('cls' if os.name == 'nt' else 'clear')
             print(title + help)
-            input("ENTER to close help")
+            input("Press ENTER to close help")
+        elif select == "i" or select == "weapon info":
+            # clear anything previously in the terminal
+            os.system('cls' if os.name == 'nt' else 'clear')
+            # print title
+            print(title)
+            # print all swords
+            print("-SWORDS-")
+            for sword in list(swordsDict):
+                weaponInfo(swordsDict[sword])
+            # then print all bows
+            print("-BOWS-")
+            for bow in list(bowsDict):
+                weaponInfo(bowsDict[bow])
+            input("Press ENTER to close wepons")
         elif select == "q" or select == "quit":
             break
 

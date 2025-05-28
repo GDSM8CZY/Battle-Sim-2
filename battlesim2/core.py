@@ -170,11 +170,11 @@ def get_random_item(my_dict):
 swordsDict = {
     "short sword": Weapon(
         name= "Short Sword",
-        dmgRange= (3, 5),
+        dmgRange= (4, 5),
         range= (1, 3),
-        critChance= 50,
-        critDmg= 2,
-        accuracy= 90,
+        critChance= 40,
+        critDmg= 3,
+        accuracy= 99,
         multiHit= 2
     ),
     "claymore": Weapon(
@@ -203,6 +203,15 @@ swordsDict = {
         critDmg= 2,
         accuracy= 90,
         multiHit= 1
+    ),
+    "spear": Weapon(
+        name= "Spear",
+        dmgRange= (3, 5),
+        range= (3, 5),
+        critChance= 25,
+        critDmg= 3,
+        accuracy= 75,
+        multiHit= 3
     ),
 }
 
@@ -239,8 +248,8 @@ bowsDict = {
         name= "Slingshot",
         dmgRange= (5, 7),
         range= (3, 6),
-        critChance= 75,
-        critDmg= 3,
+        critChance= 80,
+        critDmg= 2,
         accuracy= 40,
         multiHit= 1
     ),
@@ -248,8 +257,8 @@ bowsDict = {
         name= "Tomahawk",
         dmgRange= (6, 8),
         range= (1, 6),
-        critChance= 10,
-        critDmg= 3,
+        critChance= 15,
+        critDmg= 2,
         accuracy= 40,
         multiHit= 1
     ),
