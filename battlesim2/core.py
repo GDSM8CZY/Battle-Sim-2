@@ -98,6 +98,68 @@ class Fighter():
         if not isinstance(self.bow, Weapon):
             _, self.bow = get_random_item(bowsDict)
 
+    def attack(self, target, distance):
+        '''
+        This is the code for testing for weapon hits and hurting the other fighter
+        args:
+            target {Fighter} - The other fighter being hit
+            distance {int} - The distance between the target and the fighter
+        return:
+            {bool} - weather the enemy was in range or not
+        '''
+        # if target is in range of the sword
+        if self.sword.inRange(distance):
+            # for the ammount of time the sword hits
+            for hit in list(range(self.sword.multiHit)):
+                sleep(1)
+                hit = self.sword.testHit()
+                # if they hit set hitDmg to regular hit dammage
+                if hit =self "hit":
+                    hitDmg = random.randint(self.sword.dmgRange[0], self.sword.dmgRange[1])
+                    print(f"-{self.name} hit {target.name} for {hitDmg} Dammage-")
+                    # if they crit than use critical multiplyer
+                elif hit == "crit":
+                    hitDmg = random.randint(self.sword.dmgRange[0], self.sword.dmgRange[1])
+                    hitDmg *= self.sword.critDmg
+                    print(f"*-{self.name} Critical hit {target.name} for {hitDmg} Dammage!-*")
+                    # if they miss do nothing
+                elif hit == "miss":
+                    print(f"-{self.name} Missed!-")
+                if target.health - hitDmg < 0:
+                    target.health = 0
+                else:
+                    target.health -= hitDmg
+                # return true because it hit
+                return True
+                # if target is in bow range and not sword range
+        elif self.bow.inRange(distance):
+            # for the ammount of times the bow hits
+            for hit in list(range(self.bow.multiHit)):
+                sleep(1)
+                hit = self.bow.testHit()
+                # if the bow hits add to hitDmg
+                if hit == "hit":
+                    hitDmg = random.randint(self.bow.dmgRange[0], self.bow.dmgRange[1])
+                    print(f"-You hit for {hitDmg} Dammage!-")
+                    # if they crit than use critical multiplyer
+                elif hit == "crit":
+                    hitDmg = random.randint(self.bow.dmgRange[0], self.bow.dmgRange[1])
+                    hitDmg *= self.bow.critDmg
+                    print(f"-You Critical hit for {hitDmg} Dammage-")
+                    # if they miss do nothing
+                elif hit == "miss":
+                    print("-You Missed!-")
+                # deal dammage, but don't go below 0
+                if target.health - hitDmg < 0:
+                    target.health = 0
+                else:
+                    target.health -= hitDmg
+                # return that they hit
+                return True
+        # return false if their out of range
+        else:
+            return False
+
     # Taunts made by chatGPT
     # code made by me
     def taunt(self, target):

@@ -267,60 +267,13 @@ def playGame():
 
             # When the player wants to attack
             if playerIn == "attack" or playerIn == "a":
-                # if enemy is in range of the sword
-                if Player.sword.inRange(distance):
-                    # for the ammount of time the sword hits
-                    for hit in list(range(Player.sword.multiHit)):
-                        sleep(1)
-                        hit = Player.sword.testHit()
-                        # if they hit set hitDmg to regular hit dammage
-                        if hit == "hit":
-                            hitDmg = random.randint(Player.sword.dmgRange[0], Player.sword.dmgRange[1])
-                            print(f"-You hit for {hitDmg} Dammage-")
-                            # if they crit than use critical multiplyer
-                        elif hit == "crit":
-                            hitDmg = random.randint(Player.sword.dmgRange[0], Player.sword.dmgRange[1])
-                            hitDmg *= Player.sword.critDmg
-                            print(f"*-You Critical hit for {hitDmg} Dammage!-*")
-                            # if they miss do nothing
-                        elif hit == "miss":
-                            print("-You Missed!-")
-                        if Enemy.health - hitDmg < 0:
-                            Enemy.health = 0
-                        else:
-                            Enemy.health -= hitDmg
-                            # reset dammage for next hit
-                            hitDmg = 0
-                        # end player turn
-                        playerTurn = False
-                        # if enemy is in bow range and not sword range
-                elif Player.bow.inRange(distance):
-                    # for the ammount of times the bow hits
-                    for hit in list(range(Player.bow.multiHit)):
-                        sleep(1)
-                        hit = Player.bow.testHit()
-                        # if the bow hits add to hitDmg
-                        if hit == "hit":
-                            hitDmg = random.randint(Player.bow.dmgRange[0], Player.bow.dmgRange[1])
-                            print(f"-You hit for {hitDmg} Dammage!-")
-                            # if they crit than use critical multiplyer
-                        elif hit == "crit":
-                            hitDmg = random.randint(Player.bow.dmgRange[0], Player.bow.dmgRange[1])
-                            hitDmg *= Player.bow.critDmg
-                            print(f"-You Critical hit for {hitDmg} Dammage-")
-                            # if they miss do nothing
-                        elif hit == "miss":
-                            print("-You Missed!-")
-                        # deal dammage, but don't go below 0
-                        if Enemy.health - hitDmg < 0:
-                            Enemy.health = 0
-                        else:
-                            Enemy.health -= hitDmg
-                        # reset dammage for next hit
-                        hitDmg = 0
-                    # end player turn
+                # attack the enemy
+                inRange = Player.attack(Enemy, distance)
+                # it was in range end turn
+                if inRange:
                     playerTurn = False
-                    # say if enemy is not in range, let them pick again
+                    break
+                # else tell the player
                 else:
                     print("-Enemy not in range!-")
             elif playerIn == "chase" or playerIn == "c":
