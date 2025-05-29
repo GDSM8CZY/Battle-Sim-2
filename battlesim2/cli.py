@@ -103,8 +103,8 @@ def assignWeapons(playerName, enemyName):
             none
     '''
     # convert swordsDict and bowsDict to marticies
-    swordsMatrix = listToMatrix(list(swordsDict), 2)
-    bowsMatrix = listToMatrix(list(bowsDict), 2)
+    swordsMatrix = listToMatrix(list(swordsDict), 3)
+    bowsMatrix = listToMatrix(list(bowsDict), 3)
 
     # clear anything previously in the terminal
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -174,6 +174,58 @@ def assignWeapons(playerName, enemyName):
     Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], enemyName)
     Enemy.randomWeapons()
 
+# WIP
+def showAllWeapons():
+    '''
+    Shows all of the current weapons in pages, first swords then bows
+    args:
+        none
+    return:
+        none
+    '''
+    os.system('cls' if os.name == 'nt' else 'clear')
+    # convert swordsDict and bowsDict to marticies
+    swordsMatrix = listToMatrix(list(swordsDict), 4)
+    bowsMatrix = listToMatrix(list(bowsDict), 4)
+    page = 0
+
+    # print all swords
+    while True:
+        print("-SWORDS-")
+        for sword in swordsMatrix[page]:
+            weaponInfo(swordsDict[sword])
+
+        playerIn = input(f"<{page+1}/{len(swordsMatrix)}>\n(N) Next\n").lower()
+
+        if playerIn == "n" or playerIn == "next":
+            os.system('cls' if os.name == 'nt' else 'clear')
+            break
+        elif playerIn == "<" and page > 0:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            page -= 1
+        elif playerIn == ">" and page < len(swordsMatrix) - 1:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            page += 1
+
+    while True:
+        print("-BOWS-")
+        for bow in bowsMatrix[page]:
+            weaponInfo(bowsDict[bow])
+
+        playerIn = input(f"<{page+1}/{len(bowsMatrix)}>\n(N) Next\n").lower()
+
+        if playerIn == "n" or playerIn == "next":
+            os.system('cls' if os.name == 'nt' else 'clear')
+            break
+        elif playerIn == "<" and page > 0:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            page -= 1
+        elif playerIn == ">" and page < len(swordsMatrix) - 1:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            page += 1
+
+
+    
 
 def playGame():
     '''
@@ -183,16 +235,17 @@ def playGame():
         return:
             none
     '''
+    # TEMPORARYLY REMOVED
     # pick a name for you and the enemy
-    print("_" * 20)
-    enemyName = input("What is the Enemy called?\n")
-    playerName = input("And what are you called?\n")
-    if enemyName == "": enemyName = "Enemy"
-    if playerName == "": playerName = "Player"
-    print("_" * 20, "\n")
+    # print("_" * 20)
+    # enemyname = input("what is the enemy called?\n")
+    # playername = input("and what are you called?\n")
+    # if enemyname == "": enemyname = "enemy"
+    # if playername == "": playername = "player"
+    # print("_" * 20, "\n")
 
     # Assign the weapons to the fighters
-    assignWeapons(playerName, enemyName)
+    assignWeapons("Player", "Enemy")
 
     # variables needed to start the game
     global distance, playerTurn, playing
@@ -447,15 +500,8 @@ def main():
             os.system('cls' if os.name == 'nt' else 'clear')
             # print title
             print(title)
-            # print all swords
-            print("-SWORDS-")
-            for sword in list(swordsDict):
-                weaponInfo(swordsDict[sword])
-            # then print all bows
-            print("-BOWS-")
-            for bow in list(bowsDict):
-                weaponInfo(bowsDict[bow])
-            input("Press ENTER to close wepons")
+            # Show all the weapons
+            showAllWeapons()
         elif select == "q" or select == "quit":
             break
 

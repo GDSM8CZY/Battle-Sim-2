@@ -206,7 +206,7 @@ swordsDict = {
     ),
     "spear": Weapon(
         name= "Spear",
-        dmgRange= (3, 5),
+        dmgRange= (3, 4),
         range= (3, 5),
         critChance= 25,
         critDmg= 3,
