@@ -59,6 +59,7 @@ class Fighter():
         args:
           sword {Weapon} - the sword this fighter will use
           bow {Weapon} - the bow this fighter will use
+          name {string} - custom name for the fighter
         return:
           none
         '''
@@ -170,10 +171,10 @@ def get_random_item(my_dict):
 swordsDict = {
     "short sword": Weapon(
         name= "Short Sword",
-        dmgRange= (4, 5),
+        dmgRange= (3, 5),
         range= (1, 3),
         critChance= 40,
-        critDmg= 3,
+        critDmg= 2,
         accuracy= 99,
         multiHit= 2
     ),
@@ -193,7 +194,7 @@ swordsDict = {
         critChance= 80,
         critDmg= 2,
         accuracy= 90,
-        multiHit= 4
+        multiHit= 1
     ),
     "knuckles": Weapon(
         name= "Knuckles",
@@ -201,8 +202,8 @@ swordsDict = {
         range= (1, 2),
         critChance= 10,
         critDmg= 2,
-        accuracy= 90,
-        multiHit= 1
+        accuracy= 75,
+        multiHit= 4
     ),
     "spear": Weapon(
         name= "Spear",

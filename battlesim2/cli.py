@@ -394,16 +394,16 @@ def playGame():
                         hitDmg = random.randint(Enemy.sword.dmgRange[0], Enemy.sword.dmgRange[1])
                         hitDmg *= Enemy.sword.critDmg
                         print(f"*-They Critical hit for {hitDmg} Dammage!-*")
-                # if they miss do nothing
+                    # if they miss do nothing
                     elif hit == "miss":
                         print("-They Missed!-")
-                # deal the dammage and reset dammage to zero for next turn
-                if Player.health - hitDmg < 0:
-                    Player.health = 0
-                else:
-                    Player.health -= hitDmg
-                # reset dammage for next hit
-                hitDmg = 0
+                    # deal the dammage and reset dammage to zero for next turn
+                    if Player.health - hitDmg < 0:
+                        Player.health = 0
+                    else:
+                        Player.health -= hitDmg
+                    # reset dammage for next hit
+                    hitDmg = 0
                 # end enemy turn
                 playerTurn = True
             # 80% chance to not attack
