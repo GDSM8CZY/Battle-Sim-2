@@ -320,7 +320,8 @@ def playGame():
             Player.gamesPlayed += 1
             break
 
-        input("Press ENTER to continue")
+        if playing:
+            input("Press ENTER to continue")
         # Clear the sceren after the turn
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -330,66 +331,14 @@ def playGame():
             # Add some random behavior to the enemy
             behaviorRandom = random.randint(1, 100)
             sleep(int(behaviorRandom/10))
-            # 80% chance to not attack
-            if Enemy.sword.inRange(distance) and behaviorRandom > 20:
-                print(f"-{Enemy.name} Attacks!-")
-                sleep(1)
-                # for the ammount of time the sword hits
-                for hit in list(range(Enemy.sword.multiHit)):
-                    sleep(1)
-                    hit = Enemy.sword.testHit()
-                    # if they hit set hitDmg to regular hit dammage
-                    if hit == "hit":
-                        hitDmg = random.randint(Enemy.sword.dmgRange[0], Enemy.sword.dmgRange[1])
-                        print(f"-They hit for {hitDmg} Dammage-")
-                    # if they crit than use critical multiplyer
-                    elif hit == "crit":
-                        hitDmg = random.randint(Enemy.sword.dmgRange[0], Enemy.sword.dmgRange[1])
-                        hitDmg *= Enemy.sword.critDmg
-                        print(f"*-They Critical hit for {hitDmg} Dammage!-*")
-                    # if they miss do nothing
-                    elif hit == "miss":
-                        print("-They Missed!-")
-                    # deal the dammage and reset dammage to zero for next turn
-                    if Player.health - hitDmg < 0:
-                        Player.health = 0
-                    else:
-                        Player.health -= hitDmg
-                    # reset dammage for next hit
-                    hitDmg = 0
-                # end enemy turn
+            # attack the player
+            inRange = Enemy.attack(Player, distance)
+            # if in range, end turn
+            if inRange:
                 playerTurn = True
-            # 80% chance to not attack
-            elif Enemy.bow.inRange(distance) and behaviorRandom > 20:
-                print(f"-{Enemy.name} Attacks!-")
-                sleep(1)
-                # for the ammount of times the bow hits
-                for hit in list(range(Enemy.bow.multiHit)):
-                    sleep(1)
-                    hit = Enemy.bow.testHit()
-                    # if the bow hits add to hitDmg
-                    if hit == "hit":
-                        hitDmg = random.randint(Enemy.bow.dmgRange[0], Enemy.bow.dmgRange[1])
-                        print(f"-They hit for {hitDmg} Dammage!-")
-                    # if they crit than use critical multiplyer
-                    elif hit == "crit":
-                        hitDmg = random.randint(Enemy.bow.dmgRange[0], Enemy.bow.dmgRange[1])
-                        hitDmg *= Enemy.bow.critDmg
-                        print(f"-They Critical hit for {hitDmg} Dammage-")
-                    # if they miss do nothing
-                    elif hit == "miss":
-                        print("-They Missed!-")
-                    # deal dammage and reset
-                    if Player.health - hitDmg < 0:
-                        Player.health = 0
-                    else:
-                        Player.health -= hitDmg
-                    # reset dammage for next hit
-                    hitDmg = 0
-                # end enemy turn
-                playerTurn = True
-                # if they don't attack or can't attack, 10% chance they don't chase you
-            elif distance > Enemy.bow.range[1] or (distance < Enemy.bow.range[0] and distance > Enemy.sword.range[1]) and behaviorRandom <= 90:
+                break
+            # if they don't attack or can't attack, 10% chance they don't chase you
+            elif not inRange and behaviorRandom <= 90:
                 print("-They Chase You!-")
                 if distance - Enemy.speed * 2 < 1:
                     distance = 1
@@ -413,7 +362,8 @@ def playGame():
             Player.gamesPlayed += 1
             break
 
-        input("Press ENTER to continue")
+        if playing:
+            input("Press ENTER to continue")
         # Clear the sceren after the turn
         os.system('cls' if os.name == 'nt' else 'clear')
 
