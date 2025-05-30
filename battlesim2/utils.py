@@ -46,7 +46,7 @@ How to play:
 - Cycle through pages with "<" or ">"
 
 Stats:
-- Starting hp is 20m
+- Starting hp is 20
 - Starting Distance is 20m
 - Speed is 2m
 

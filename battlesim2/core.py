@@ -13,7 +13,7 @@ class Weapon():
           critChance {integer} - percent chance for weapon to critical hit
           critDmg {integer} - percent extra dammage critical hits do
           accuracy {integer} - percent chance the weapon hits the opponent
-          multiHit {integer} - the ammount of times the weapon will attempt to attack the enemy
+          multiHit {integer} - the ammount of times the weapon will attempt to attack
         returns:
           none
         '''
@@ -118,10 +118,10 @@ class Fighter():
                     # if they miss do nothing
                 elif hit == "miss":
                     print(f"-{self.name} Missed!-")
-                # check for armor bonus
-                if self.armor.swordDmgFx != 0:
+                # check for armor bonus not if they miss
+                if self.armor.swordDmgFx != 0 and hit != "miss":
                     print(f"-Armor bonus {self.armor.swordDmgFx} Dammage-")
-                    hitDmg += self.armor.swordDmdFx
+                    hitDmg += self.armor.swordDmgFx
                 if target.health - hitDmg < 0:
                     target.health = 0
                 else:
@@ -148,8 +148,8 @@ class Fighter():
                     # if they miss do nothing
                 elif hit == "miss":
                     print(f"-{self.name} Missed!-")
-                # check for armor bonus
-                if self.armor.bowDmgFx != 0:
+                # check for armor bonus not if they miss
+                if self.armor.bowDmgFx != 0 and hit != "miss":
                     print(f"-Armor bonus {self.armor.bowDmgFx} Dammage-")
                     hitDmg += self.armor.bowDmgFx
                 # deal dammage, but don't go below 0
@@ -234,6 +234,14 @@ class Fighter():
 # class for armor
 class Armor:
     def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
+        '''
+        Creates a new armor piece
+        args:
+            hpFx {int} - the ammount it affects you hp
+            speedFx {int} - the ammount it affects you speed
+            bowDmgFx {int} - the ammount it affects you bow dammage
+            swordDmgfx {int} - the ammount it affects you sword dammage
+        '''
         self.hpFx = hpFx
         self.speedFx = speedFx
         self.bowDmgFx = bowDmgFx
@@ -341,25 +349,32 @@ bowsDict = {
 
 # dictionary with all armors
 armorDict = {
-    "leather gear": Armor(
-        name="Leather Gear",
-        hpFx=3,
-        speedFx=1,
-        bowDmgFx=2,
-        swordDmgFx=1
-    ),
-    "chain armor": Armor(
-        name="Chain Armor",
-        hpFx=5,
-        speedFx=0,
-        bowDmgFx=0,
-        swordDmgFx=3
-    ),
     "no armor": Armor(
         name="No Armor",
         hpFx=0,
         speedFx=2,
         bowDmgFx=0,
         swordDmgFx=0
+    ),
+    "leather tunic": Armor(
+        name="Leather Tunic",
+        hpFx=3,
+        speedFx=1,
+        bowDmgFx=1,
+        swordDmgFx=-1
+    ),
+    "chain armor": Armor(
+        name="Chain Armor",
+        hpFx=5,
+        speedFx=-1,
+        bowDmgFx=0,
+        swordDmgFx=1
+    ),
+    "cloak": Armor(
+        name="Cloak",
+        hpFx=-5,
+        speedFx=4,
+        bowDmgFx=0,
+        swordDmgFx=2
     )
 }

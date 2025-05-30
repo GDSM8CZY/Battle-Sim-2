@@ -35,10 +35,10 @@ def armorInfo(armor):
     '''
     print("_"*20)
     print(f"_-{armor.name}-_")
-    print(f"-Increases hp by {armor.hpFx}-")
-    print(f"-Increases bow dammage by {armor.bowDmgFx}m-")
-    print(f"-Increases sword dammage by {armor.swordDmgFx}m-")
-    print(f"-Increases speed by {armor.speedFx}m-")
+    print(f"Changes hp by {armor.hpFx}")
+    print(f"Changes bow dammage by {armor.bowDmgFx}")
+    print(f"Changes sword dammage by {armor.swordDmgFx}")
+    print(f"Changes speed by {armor.speedFx}m")
     print("_"*20)
     sleep(1)
 
@@ -232,7 +232,7 @@ def showAllWeapons():
     # convert swordsDict and bowsDict to marticies
     swordsMatrix = listToMatrix(list(swordsDict), 4)
     bowsMatrix = listToMatrix(list(bowsDict), 4)
-    armorMatrix = listToMatrix(list(armorDict), 4)
+    armorMatrix = listToMatrix(list(armorDict), 5)
     page = 0
 
     # print all swords
@@ -267,7 +267,7 @@ def showAllWeapons():
         elif playerIn == "<" and page > 0:
             os.system('cls' if os.name == 'nt' else 'clear')
             page -= 1
-        elif playerIn == ">" and page < len(swordsMatrix) - 1:
+        elif playerIn == ">" and page < len(bowsMatrix) - 1:
             os.system('cls' if os.name == 'nt' else 'clear')
             page += 1
 
@@ -285,7 +285,7 @@ def showAllWeapons():
         elif playerIn == "<" and page > 0:
             os.system('cls' if os.name == 'nt' else 'clear')
             page -= 1
-        elif playerIn == ">" and page < len(swordsMatrix) - 1:
+        elif playerIn == ">" and page < len(armorMatrix) - 1:
             os.system('cls' if os.name == 'nt' else 'clear')
             page += 1
 
