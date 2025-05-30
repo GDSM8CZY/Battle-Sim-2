@@ -2,7 +2,7 @@ import os
 import random
 from time import sleep
 
-from battlesim2.core import Fighter, swordsDict, bowsDict
+from battlesim2.core import Fighter, swordsDict, bowsDict, armorDict
 from battlesim2.utils import listToMatrix, title, help
 
 # prints all the information for a weapon
@@ -105,6 +105,7 @@ def assignWeapons(playerName, enemyName):
     # convert swordsDict and bowsDict to marticies
     swordsMatrix = listToMatrix(list(swordsDict), 3)
     bowsMatrix = listToMatrix(list(bowsDict), 3)
+    armorMatrix = listToMatrix(list(armorDict), 3)
 
     # clear anything previously in the terminal
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -165,13 +166,41 @@ def assignWeapons(playerName, enemyName):
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("-Something went wrong, try again!-\n")
 
+    # Selection for armor
+    print("Pick your armor!")
+    sleep(1)
+    page = 0
+    while True:
+        # print outs the page
+        for armor in armorMatrix[page]:
+            weaponInfo(armorDict[armor])
+        print(f"<Pg{page + 1}/{len(armorMatrix)}>")
+        armorSelect = input().lower()
+        # logic for changeing pages
+        if armorSelect == ">" and page < len(armorMatrix) - 1:
+            page += 1
+            os.system('cls' if os.name == 'nt' else 'clear')
+        elif armorSelect == "<" and page > 0:
+            page -= 1
+            os.system('cls' if os.name == 'nt' else 'clear')
+        else:
+            # select sword on input
+            try:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                armorSelect = armorDict[armorSelect]
+                print(f"=-{armorSelect.name} Selected-=\n")
+                break
+            except:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("-Something went wrong, try again!-\n")
+
     # gives player the selected weapons
     global Player, Enemy
-    Player = Fighter(swordSelect, bowSelect, playerName)
+    Player = Fighter(swordSelect, bowSelect, armorSelect, playerName)
     Player.read(False)
 
     # gives enemies random weapons
-    Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], enemyName)
+    Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], armorDict["no armor"], enemyName)
     Enemy.randomWeapons()
 
 # WIP
@@ -187,6 +216,7 @@ def showAllWeapons():
     # convert swordsDict and bowsDict to marticies
     swordsMatrix = listToMatrix(list(swordsDict), 4)
     bowsMatrix = listToMatrix(list(bowsDict), 4)
+    armorMatrix = listToMatrix(list(armorDict), 4)
     page = 0
 
     # print all swords
@@ -207,12 +237,31 @@ def showAllWeapons():
             os.system('cls' if os.name == 'nt' else 'clear')
             page += 1
 
+    page = 0
     while True:
         print("-BOWS-")
         for bow in bowsMatrix[page]:
             weaponInfo(bowsDict[bow])
 
         playerIn = input(f"<{page+1}/{len(bowsMatrix)}>\n(N) Next\n").lower()
+
+        if playerIn == "n" or playerIn == "next":
+            os.system('cls' if os.name == 'nt' else 'clear')
+            break
+        elif playerIn == "<" and page > 0:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            page -= 1
+        elif playerIn == ">" and page < len(swordsMatrix) - 1:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            page += 1
+
+    page = 0
+    while True:
+        print("-ARMOR-")
+        for armor in armorMatrix[page]:
+            weaponInfo(armorDict[armor])
+
+        playerIn = input(f"<{page+1}/{len(armorMatrix)}>\n(N) Next\n").lower()
 
         if playerIn == "n" or playerIn == "next":
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -249,7 +298,7 @@ def playGame():
 
     # variables needed to start the game
     global distance, playerTurn, playing
-    distance = 10
+    distance = 20
     playerTurn = True
     playing = True
 
@@ -259,8 +308,6 @@ def playGame():
         # Player turn actions
         while playerTurn:
             gameInfo()
-            # running total of dammage done this turn
-            hitDmg = 0
             # get player input
             print("What do you want to do?")
             playerIn = input("Attack (A) | Chase (C) | Run (R) | Weapon Info (I) | Wait (W) | Quit (Q)" + "\n").lower()
@@ -278,17 +325,20 @@ def playGame():
                     print("-Enemy not in range!-")
             elif playerIn == "chase" or playerIn == "c":
                 # reduce distance when you chase unless your too close
-                if distance - Player.speed * 2 <= 1:
+                if distance - Player.speed <= 1:
                     print("-Your can't get closer!-")
                     distance = 1
                 else:
                     print("-You chase the enemy!-")
-                    distance -= Player.speed * 2
+                    distance -= Player.speed
                 playerTurn = False
             elif playerIn == "run" or playerIn == "r":
                 # Increase distance when you run
-                print("-You run from the enemy!-")
-                distance += Player.speed
+                if random.randint(1, 2) == 1:
+                    print("-You run from the enemy!-")
+                    distance += Player.speed
+                else:
+                    print("-You tried to run away!-")
                 playerTurn = False
             elif playerIn == "weapon Info" or playerIn == "i":
                 # Give information on your weapons and enemies weapons
@@ -337,25 +387,29 @@ def playGame():
             if inRange:
                 playerTurn = True
                 break
-            # if they don't attack or can't attack, 10% chance they don't chase you
-            elif not inRange and behaviorRandom <= 90:
+            # if they don't attack or can't attack, 20% chance they don't chase you
+            elif not inRange and behaviorRandom <= 80:
                 print("-They Chase You!-")
-                if distance - Enemy.speed * 2 < 1:
+                if distance - Enemy.speed < 1:
                     distance = 1
                     print("-Their in Your Face!-")
                 else:
-                    distance -= Enemy.speed * 2
+                    distance -= Enemy.speed
                 playerTurn = True
-                # if they don't chase you, 5% chance they don't run
-            elif behaviorRandom <= 95:
+                # if they don't chase you, 10% chance they don't run
+            elif behaviorRandom <= 90:
                 print("-They Run From You!-")
                 distance += Enemy.speed
                 playerTurn = True
                 # if they don't do anything, they 'wait'
             else:
-                print("-They wait for you-")
-                print(Enemy.taunt(Player))
-                playerTurn = True
+                if random.randint(1, 2) == 1:
+                    print("-They wait for you-")
+                    print(Enemy.taunt(Player))
+                    playerTurn = True
+                else:
+                    print("-They tried to run away!-")
+                    playerTurn = True
 
         # check if the game is over
         if checkWin():

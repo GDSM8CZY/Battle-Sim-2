@@ -45,6 +45,11 @@ How to play:
 - Pages are indicated by <#>
 - Cycle through pages with "<" or ">"
 
+Stats:
+- Starting hp is 20m
+- Starting Distance is 20m
+- Speed is 2m
+
 Look at the GitHub!: https://github.com/GDSM8CZY/BattleSim2
 ___________________________________________________
 '''

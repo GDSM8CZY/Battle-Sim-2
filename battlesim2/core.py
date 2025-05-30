@@ -54,7 +54,7 @@ class Weapon():
 
 # Class for the player and enemy
 class Fighter():
-    def __init__(self, sword, bow, name):
+    def __init__(self, sword, bow, armor, name):
         '''
         initializes variables for fighters
         args:
@@ -68,8 +68,9 @@ class Fighter():
         self.sword = sword
         self.bow = bow
         self.name = name
-        self.health = 20
-        self.speed = 1
+        self.armor = armor
+        self.health = 20 + self.armor.hpFx
+        self.speed = 2
         # account stats
         self.gamesPlayed = 0
         self.lastSword = self.sword
@@ -77,7 +78,7 @@ class Fighter():
 
     def randomWeapons(self):
         '''
-        sets random weapons for the fighter
+        sets random weapons and armor for the fighter
         args:
           none
         return:
@@ -94,6 +95,9 @@ class Fighter():
 
         # selects a random bow
         self.bow = bowsDict[random.choice(possibleBows)]
+
+        # Get a random armor
+        _, self.armor = get_random_item(armorDict)
 
         # gives random bow if there is no bow selected
         if not isinstance(self.bow, Weapon):
@@ -130,6 +134,10 @@ class Fighter():
                     # if they miss do nothing
                 elif hit == "miss":
                     print(f"-{self.name} Missed!-")
+                # check for armor bonus
+                if self.armor.swordDmgFx != 0:
+                    print(f"-Armor bonus {self.armor.swordDmgFx} Dammage-")
+                    hitDmg += self.armor.swordDmdFx
                 if target.health - hitDmg < 0:
                     target.health = 0
                 else:
@@ -156,6 +164,10 @@ class Fighter():
                     # if they miss do nothing
                 elif hit == "miss":
                     print(f"-{self.name} Missed!-")
+                # check for armor bonus
+                if self.armor.bowDmgFx != 0:
+                    print(f"-Armor bonus {self.armor.bowDmgFx} Dammage-")
+                    hitDmg += self.armor.bowDmgFx
                 # deal dammage, but don't go below 0
                 if target.health - hitDmg < 0:
                     target.health = 0
@@ -195,6 +207,13 @@ class Fighter():
         return f"{self.name}: ..."
 
     def write(self):
+        '''
+        Write the data to the Player-stats file
+        args:
+            none
+        return:
+            none
+        '''
         # creats stats file if not already created
         try:
             f = open(f"{self.name}-stats", "x")
@@ -203,9 +222,16 @@ class Fighter():
             f = open(f"{self.name}-stats", "w")
 
         # writes to stats file
-        f.write(f"{self.gamesPlayed}\n{self.lastSword}\n{self.lastBow}")
+        f.write(f"{self.gamesPlayed}\n{self.lastSword.name}\n{self.lastBow.name}")
 
     def read(self, display):
+        '''
+        Gets data from the Player-stats file
+        args:
+            none
+        return:
+            none
+        '''
         # try and read stats from the file
         while True:
             try:
@@ -236,100 +262,134 @@ def get_random_item(my_dict):
     random_key = random.choice(list(my_dict))
     return random_key, my_dict[random_key]
 
+class Armor:
+    def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
+        self.hpFx = hpFx
+        self.speedFx = speedFx
+        self.bowDmgFx = bowDmgFx
+        self.swordDmgFx = swordDmgFx
+        self.name = name
+
+
 # dictionary of all of the swords
 swordsDict = {
     "short sword": Weapon(
-        name= "Short Sword",
-        dmgRange= (3, 5),
-        range= (1, 3),
-        critChance= 40,
-        critDmg= 2,
-        accuracy= 99,
-        multiHit= 2
+        name="Short Sword",
+        dmgRange=(3, 5),
+        range=(2, 6),
+        critChance=40,
+        critDmg=2,
+        accuracy=99,
+        multiHit=2
     ),
     "claymore": Weapon(
-        name= "Claymore",
-        dmgRange= (4, 5),
-        range= (1, 5),
-        critChance= 20,
-        critDmg= 3,
-        accuracy= 65,
-        multiHit= 1
+        name="Claymore",
+        dmgRange=(4, 5),
+        range=(2, 10),
+        critChance=20,
+        critDmg=3,
+        accuracy=65,
+        multiHit=1
     ),
     "dagger": Weapon(
-        name= "Dagger",
-        dmgRange= (4, 5),
-        range= (1, 2),
-        critChance= 80,
-        critDmg= 2,
-        accuracy= 90,
-        multiHit= 1
+        name="Dagger",
+        dmgRange=(4, 5),
+        range=(2, 4),
+        critChance=80,
+        critDmg=2,
+        accuracy=90,
+        multiHit=1
     ),
     "knuckles": Weapon(
-        name= "Knuckles",
-        dmgRange= (6, 7),
-        range= (1, 2),
-        critChance= 10,
-        critDmg= 2,
-        accuracy= 75,
-        multiHit= 4
+        name="Knuckles",
+        dmgRange=(6, 7),
+        range=(2, 4),
+        critChance=10,
+        critDmg=2,
+        accuracy=75,
+        multiHit=4
     ),
     "spear": Weapon(
-        name= "Spear",
-        dmgRange= (3, 4),
-        range= (3, 5),
-        critChance= 25,
-        critDmg= 3,
-        accuracy= 75,
-        multiHit= 3
+        name="Spear",
+        dmgRange=(1, 5),
+        range=(6, 10),
+        critChance=25,
+        critDmg=3,
+        accuracy=65,
+        multiHit=3
     ),
 }
 
 # dictionary of all of the bows
 bowsDict = {
     "hunting bow": Weapon(
-        name= "Hunting Bow",
-        dmgRange= (1, 3),
-        range= (5, 8),
-        critChance= 30,
-        critDmg= 2,
-        accuracy= 50,
-        multiHit= 3
+        name="Hunting Bow",
+        dmgRange=(1, 3),
+        range=(10, 16),
+        critChance=30,
+        critDmg=2,
+        accuracy=50,
+        multiHit=3
     ),
     "crossbow": Weapon(
-        name= "Crossbow",
-        dmgRange= (3, 6),
-        range= (9, 10),
-        critChance= 35,
-        critDmg= 2,
-        accuracy= 80,
-        multiHit= 1
+        name="Crossbow",
+        dmgRange=(3, 6),
+        range=(18, 20),
+        critChance=35,
+        critDmg=2,
+        accuracy=80,
+        multiHit=1
     ),
     "revolver": Weapon(
-        name= "Revolver",
-        dmgRange= (2, 3),
-        range= (5, 10),
-        critChance= 25,
-        critDmg= 2,
-        accuracy= 30,
-        multiHit= 6
+        name="Revolver",
+        dmgRange=(2, 3),
+        range=(10, 20),
+        critChance=25,
+        critDmg=2,
+        accuracy=30,
+        multiHit=6
     ),
     "slingshot": Weapon(
-        name= "Slingshot",
-        dmgRange= (5, 7),
-        range= (3, 6),
-        critChance= 80,
-        critDmg= 2,
-        accuracy= 40,
-        multiHit= 1
+        name="Slingshot",
+        dmgRange=(5, 7),
+        range=(6, 12),
+        critChance=80,
+        critDmg=2,
+        accuracy=40,
+        multiHit=1
     ),
     "tomahawk": Weapon(
-        name= "Tomahawk",
-        dmgRange= (6, 8),
-        range= (1, 6),
-        critChance= 15,
-        critDmg= 2,
-        accuracy= 40,
-        multiHit= 1
+        name="Tomahawk",
+        dmgRange=(6, 8),
+        range=(2, 12),
+        critChance=15,
+        critDmg=2,
+        accuracy=40,
+        multiHit=1
     ),
+}
+
+# dictionary with all armors
+armorDict = {
+    "leather gear": Armor(
+        name="Leather Gear",
+        hpFx=3,
+        speedFx=1,
+        bowDmgFx=2,
+        swordDmgFx=1
+    ),
+    "chain armor": Armor(
+        name="Chain Armor",
+        hpFx=5,
+        speedFx=0,
+        bowDmgFx=0,
+        swordDmgFx=3
+    ),
+    "no armor": Armor(
+        name="No Armor",
+        hpFx=0,
+        speedFx=2,
+        bowDmgFx=0,
+        swordDmgFx=0
+    )
 }
