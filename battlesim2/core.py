@@ -65,45 +65,27 @@ class Fighter():
           none
         '''
         # used in the game stats
-        self.sword = sword
-        self.bow = bow
+        # get random sword if empty string is passed
+        if sword == "":
+            self.sword = swordsDict[random.choice(list(swordsDict))]
+        else:
+            self.sword = sword
+        # same for bows and armor
+        if sword == "":
+            self.bow = bowsDict[random.choice(list(bowsDict))]
+        else:
+            self.bow = bow
+        if armor == "":
+            self.armor = armorDict[random.choice(list(armorDict))]
+        else:
+            self.armor = armor
         self.name = name
-        self.armor = armor
         self.health = 20 + self.armor.hpFx
         self.speed = 2 + self.armor.speedFx
         # account stats
         self.gamesPlayed = 0
         self.lastSword = self.sword
         self.lastBow = self.bow
-
-    def randomWeapons(self):
-        '''
-        sets random weapons and armor for the fighter
-        args:
-          none
-        return:
-          none
-        '''
-        # select random sword
-        _, self.sword = get_random_item(swordsDict)
-
-        # find all bows with no overlapping range with the sword
-        possibleBows = []
-        for bow in list(bowsDict):
-            if bowsDict[bow].range[0] >= self.sword.range[1]:
-                possibleBows.append(bow)
-
-        # selects a random bow
-        self.bow = bowsDict[random.choice(possibleBows)]
-
-        # Get a random armor and make sure the hp and speed is correct
-        _, self.armor = get_random_item(armorDict)
-        self.hp = 20 + self.armor.hpFx
-        self.speed = 2 + self.armor.speedFx
-
-        # gives random bow if there is no bow selected
-        if not isinstance(self.bow, Weapon):
-            _, self.bow = get_random_item(bowsDict)
 
     def attack(self, target, distance):
         '''
@@ -248,6 +230,7 @@ class Fighter():
         if display:
             print(f"Games Played: {self.gamesPlayed}")
 
+
 # class for armor
 class Armor:
     def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
@@ -256,22 +239,6 @@ class Armor:
         self.bowDmgFx = bowDmgFx
         self.swordDmgFx = swordDmgFx
         self.name = name
-
-# funciton from google gemini
-def get_random_item(my_dict):
-    '''
-      Gets a random key-value pair from a dictionary
-      args:
-        my_dict {dictionary} - The dictionary to select a random item
-      return:
-        the key as a string and the value in the dict
-      '''
-    if not my_dict:
-        return None
-
-    random_key = random.choice(list(my_dict))
-    return random_key, my_dict[random_key]
-
 
 
 # dictionary of all of the swords

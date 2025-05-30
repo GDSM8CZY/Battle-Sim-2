@@ -217,8 +217,7 @@ def assignWeapons(playerName, enemyName):
     Player.read(False)
 
     # gives enemies random weapons
-    Enemy = Fighter(swordsDict["short sword"], bowsDict["hunting bow"], armorDict["no armor"], enemyName)
-    Enemy.randomWeapons()
+    Enemy = Fighter("", "", "", enemyName)
 
 # WIP
 def showAllWeapons():
