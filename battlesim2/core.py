@@ -1,4 +1,5 @@
 import random
+from time import sleep
 
 # Class for all of the weapons
 class Weapon():
@@ -109,12 +110,14 @@ class Fighter():
         '''
         # if target is in range of the sword
         if self.sword.inRange(distance):
+            # set hitDmg to 0
+            hitDmg = 0
             # for the ammount of time the sword hits
             for hit in list(range(self.sword.multiHit)):
                 sleep(1)
                 hit = self.sword.testHit()
                 # if they hit set hitDmg to regular hit dammage
-                if hit =self "hit":
+                if hit == "hit":
                     hitDmg = random.randint(self.sword.dmgRange[0], self.sword.dmgRange[1])
                     print(f"-{self.name} hit {target.name} for {hitDmg} Dammage-")
                     # if they crit than use critical multiplyer
@@ -129,10 +132,12 @@ class Fighter():
                     target.health = 0
                 else:
                     target.health -= hitDmg
-                # return true because it hit
-                return True
+            # return true because it hit
+            return True
                 # if target is in bow range and not sword range
         elif self.bow.inRange(distance):
+            # set hitDmg to 0
+            hitDmg = 0
             # for the ammount of times the bow hits
             for hit in list(range(self.bow.multiHit)):
                 sleep(1)
@@ -154,8 +159,8 @@ class Fighter():
                     target.health = 0
                 else:
                     target.health -= hitDmg
-                # return that they hit
-                return True
+            # return that they hit
+            return True
         # return false if their out of range
         else:
             return False
