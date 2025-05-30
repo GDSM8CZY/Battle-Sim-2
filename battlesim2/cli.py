@@ -25,6 +25,23 @@ def weaponInfo(weapon):
     print("_"*20)
     sleep(1)
 
+def armorInfo(armor):
+    '''
+    Prints out all the info about some armor
+    args:
+        armor {Armor} - the armor this is being inspected
+    return:
+        none
+    '''
+    print("_"*20)
+    print(f"_-{armor.name}-_")
+    print(f"-Increases hp by {armor.hpFx}-")
+    print(f"-Increases bow dammage by {armor.bowDmgFx}m-")
+    print(f"-Increases sword dammage by {armor.swordDmgFx}m-")
+    print(f"-Increases speed by {armor.speedFx}m-")
+    print("_"*20)
+    sleep(1)
+
 
 # Prints all the info for the game
 def gameInfo():
@@ -173,7 +190,7 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for armor in armorMatrix[page]:
-            weaponInfo(armorDict[armor])
+            armorInfo(armorDict[armor])
         print(f"<Pg{page + 1}/{len(armorMatrix)}>")
         armorSelect = input().lower()
         # logic for changeing pages
@@ -259,7 +276,7 @@ def showAllWeapons():
     while True:
         print("-ARMOR-")
         for armor in armorMatrix[page]:
-            weaponInfo(armorDict[armor])
+            armorInfo(armorDict[armor])
 
         playerIn = input(f"<{page+1}/{len(armorMatrix)}>\n(N) Next\n").lower()
 
@@ -347,11 +364,13 @@ def playGame():
                 sleep(1)
                 weaponInfo(Player.sword)
                 weaponInfo(Player.bow)
+                armorInfo(Player.armor)
                 print("_"*20)
                 print(f"{Enemy.name} Weapons:")
                 sleep(1)
                 weaponInfo(Enemy.sword)
                 weaponInfo(Enemy.bow)
+                armorInfo(Enemy.armor)
             elif playerIn == "quit" or playerIn == "q":
                 # Ends the game loop, quitting the game
                 playing = False

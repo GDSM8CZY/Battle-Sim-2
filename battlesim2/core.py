@@ -70,7 +70,7 @@ class Fighter():
         self.name = name
         self.armor = armor
         self.health = 20 + self.armor.hpFx
-        self.speed = 2
+        self.speed = 2 + self.armor.speedFx
         # account stats
         self.gamesPlayed = 0
         self.lastSword = self.sword
@@ -96,8 +96,10 @@ class Fighter():
         # selects a random bow
         self.bow = bowsDict[random.choice(possibleBows)]
 
-        # Get a random armor
+        # Get a random armor and make sure the hp and speed is correct
         _, self.armor = get_random_item(armorDict)
+        self.hp = 20 + self.armor.hpFx
+        self.speed = 2 + self.armor.speedFx
 
         # gives random bow if there is no bow selected
         if not isinstance(self.bow, Weapon):
@@ -222,7 +224,7 @@ class Fighter():
             f = open(f"{self.name}-stats", "w")
 
         # writes to stats file
-        f.write(f"{self.gamesPlayed}\n{self.lastSword.name}\n{self.lastBow.name}")
+        f.write(f"{self.gamesPlayed}\n{self.lastSword}\n{self.lastBow}")
 
     def read(self, display):
         '''
@@ -246,6 +248,14 @@ class Fighter():
         if display:
             print(f"Games Played: {self.gamesPlayed}")
 
+# class for armor
+class Armor:
+    def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
+        self.hpFx = hpFx
+        self.speedFx = speedFx
+        self.bowDmgFx = bowDmgFx
+        self.swordDmgFx = swordDmgFx
+        self.name = name
 
 # funciton from google gemini
 def get_random_item(my_dict):
@@ -262,13 +272,6 @@ def get_random_item(my_dict):
     random_key = random.choice(list(my_dict))
     return random_key, my_dict[random_key]
 
-class Armor:
-    def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
-        self.hpFx = hpFx
-        self.speedFx = speedFx
-        self.bowDmgFx = bowDmgFx
-        self.swordDmgFx = swordDmgFx
-        self.name = name
 
 
 # dictionary of all of the swords
