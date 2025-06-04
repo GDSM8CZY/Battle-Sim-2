@@ -2,45 +2,10 @@ import os
 import random
 from time import sleep
 
-from battlesim2.core import Fighter, swordsDict, bowsDict, armorDict
+from battlesim2.core import Fighter, swordsDict, bowsDict, armorDict, weaponInfo, armorInfo
 from battlesim2.utils import listToMatrix, title, help
 
-# prints all the information for a weapon
-def weaponInfo(weapon):
-    '''
-      prints out all the information about a weapon
-      args:
-        weapon {Weapon} - the weapon that is being inspected
-      return:
-        none
-    '''
-    print("_"*20)
-    print(f"_-{weapon.name}-_")
-    print(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Dammage-")
-    print(f"-{weapon.range[0]}m to {weapon.range[1]}m Range-")
-    print(f"-{weapon.accuracy}% Accuracy-")
-    print(f"-{weapon.critChance}% Critical Hit Chance")
-    print(f"-Critical Hits do {weapon.critDmg}x Dammage")
-    print(f"-Hits {weapon.multiHit} Time(s)-")
-    print("_"*20)
-    sleep(1)
 
-def armorInfo(armor):
-    '''
-    Prints out all the info about some armor
-    args:
-        armor {Armor} - the armor this is being inspected
-    return:
-        none
-    '''
-    print("_"*20)
-    print(f"_-{armor.name}-_")
-    print(f"Changes hp by {armor.hpFx}")
-    print(f"Changes bow dammage by {armor.bowDmgFx}")
-    print(f"Changes sword dammage by {armor.swordDmgFx}")
-    print(f"Changes speed by {armor.speedFx}m")
-    print("_"*20)
-    sleep(1)
 
 
 # Prints all the info for the game
@@ -52,6 +17,10 @@ def gameInfo():
       return:
         none
     '''
+    print(f"{Player.name} gear")
+    Player.fighterInfo()
+    print(f"{Enemy.name} gear")
+    Enemy.fighterInfo()
     print("_"*20)
     print(f"{Player.name} HEALTH:")
     print("++ "*Player.health, f"{Player.health}hp")
@@ -62,6 +31,20 @@ def gameInfo():
     print("-- "*distance, f"{distance}m")
     print("_"*20)
     sleep(1)
+
+# print weapon info
+def printInfo(obj):
+    '''
+    Take a weapon or armor object and prints it's info
+    args
+        obj {Weapon} or {Armor} - object that is being inspected
+    return:
+        none
+    '''
+    if type(obj) == type(swordsDict['short sword']):
+        print("\n".join(weaponInfo(obj)))
+    else:
+        print("\n".join(armorInfo(obj)))
 
 
 def checkWin():
@@ -74,6 +57,8 @@ def checkWin():
     '''
     global playing
     if Player.health <= 0:
+        # clear anything previously in the terminal
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("_"*20)
         # ASCII font from https://www.asciiart.eu/
         print('''
@@ -93,6 +78,8 @@ def checkWin():
         playing = False
         return True
     elif Enemy.health <= 0:
+        # clear anything previously in the terminal
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("_"*20)
         # ASCII font from https://www.asciiart.eu/
         print('''
@@ -134,7 +121,7 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for sword in swordsMatrix[page]:
-            weaponInfo(swordsDict[sword])
+            printInfo(swordsDict[sword])
         print(f"<Pg{page + 1}/{len(swordsMatrix)}>")
         swordSelect = input().lower()
         # logic for changeing pages
@@ -162,7 +149,7 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for bow in bowsMatrix[page]:
-            weaponInfo(bowsDict[bow])
+            printInfo(bowsDict[bow])
         print(f"<Pg{page + 1}/{len(bowsMatrix)}>")
         bowSelect = input().lower()
         # logic for changeing pages
@@ -190,7 +177,7 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for armor in armorMatrix[page]:
-            armorInfo(armorDict[armor])
+            printInfo(armorDict[armor])
         print(f"<Pg{page + 1}/{len(armorMatrix)}>")
         armorSelect = input().lower()
         # logic for changeing pages
@@ -219,7 +206,7 @@ def assignWeapons(playerName, enemyName):
     # gives enemies random weapons
     Enemy = Fighter("", "", "", enemyName)
 
-# WIP
+# shows all the weapons
 def showAllWeapons():
     '''
     Shows all of the current weapons in pages, first swords then bows
@@ -239,7 +226,7 @@ def showAllWeapons():
     while True:
         print("-SWORDS-")
         for sword in swordsMatrix[page]:
-            weaponInfo(swordsDict[sword])
+            printInfo(swordsDict[sword])
 
         playerIn = input(f"<{page+1}/{len(swordsMatrix)}>\n(N) Next\n").lower()
 
@@ -257,7 +244,7 @@ def showAllWeapons():
     while True:
         print("-BOWS-")
         for bow in bowsMatrix[page]:
-            weaponInfo(bowsDict[bow])
+            printInfo(bowsDict[bow])
 
         playerIn = input(f"<{page+1}/{len(bowsMatrix)}>\n(N) Next\n").lower()
 
@@ -275,7 +262,7 @@ def showAllWeapons():
     while True:
         print("-ARMOR-")
         for armor in armorMatrix[page]:
-            armorInfo(armorDict[armor])
+            printInfo(armorDict[armor])
 
         playerIn = input(f"<{page+1}/{len(armorMatrix)}>\n(N) Next\n").lower()
 
@@ -326,7 +313,7 @@ def playGame():
             gameInfo()
             # get player input
             print("What do you want to do?")
-            playerIn = input("Attack (A) | Chase (C) | Run (R) | Weapon Info (I) | Wait (W) | Quit (Q)" + "\n").lower()
+            playerIn = input("Attack (A) | Chase (C) | Run (R) | Wait (W) | Quit (Q)" + "\n").lower()
 
             # When the player wants to attack
             if playerIn == "attack" or playerIn == "a":
@@ -356,20 +343,6 @@ def playGame():
                 else:
                     print("-You tried to run away!-")
                 playerTurn = False
-            elif playerIn == "weapon Info" or playerIn == "i":
-                # Give information on your weapons and enemies weapons
-                print("_"*20)
-                print("Your Weapons:")
-                sleep(1)
-                weaponInfo(Player.sword)
-                weaponInfo(Player.bow)
-                armorInfo(Player.armor)
-                print("_"*20)
-                print(f"{Enemy.name} Weapons:")
-                sleep(1)
-                weaponInfo(Enemy.sword)
-                weaponInfo(Enemy.bow)
-                armorInfo(Enemy.armor)
             elif playerIn == "quit" or playerIn == "q":
                 # Ends the game loop, quitting the game
                 playing = False

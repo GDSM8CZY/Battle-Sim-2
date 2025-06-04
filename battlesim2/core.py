@@ -190,6 +190,32 @@ class Fighter():
         # if no taunt is selected return this
         return f"{self.name}: ..."
 
+    def fighterInfo(self):
+        '''
+        Will look at the fighters gear and print it out all the info next to eachother
+        args:
+            none
+        return:
+            none
+        '''
+        swordLines = weaponInfo(self.sword)
+        bowLines = weaponInfo(self.bow)
+        armorLines = armorInfo(self.armor)
+        spacing = 30
+
+        # set the armor to the same lenght as the bow and sword
+        while len(armorLines) < len(swordLines):
+            armorLines.append("")
+
+        # prepare the lines to be printed
+        for i in range(len(swordLines)):
+            line = [
+                swordLines[i] + (" " * (spacing - len(swordLines[i]))),
+                bowLines[i] + (" " * (spacing - len(bowLines[i]))),
+                armorLines[i]
+            ]
+            print("|".join(line))
+
     def write(self):
         '''
         Write the data to the Player-stats file
@@ -248,6 +274,47 @@ class Armor:
         self.swordDmgFx = swordDmgFx
         self.name = name
 
+# returns all the information for a weapon
+def weaponInfo(weapon):
+    '''
+    returns a list with all the lines of wepon info
+      args:
+        weapon {Weapon} - the weapon that is being inspected
+      return:
+        {list} - every line that needs to be printed
+    '''
+    # lines to print
+    lines = []
+    lines.append("_"*20)
+    lines.append(f"_-{weapon.name}-_")
+    lines.append(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Dammage-")
+    lines.append(f"-{weapon.range[0]}m to {weapon.range[1]}m Range-")
+    lines.append(f"-{weapon.accuracy}% Accuracy-")
+    lines.append(f"-{weapon.critChance}% Critical Hit Chance")
+    lines.append(f"-Critical Hits do {weapon.critDmg}x Dammage")
+    lines.append(f"-Hits {weapon.multiHit} Time(s)-")
+    lines.append("_"*20)
+    return lines
+
+# returns all the info about an armor
+def armorInfo(armor):
+    '''
+    Prints out all the info about some armor
+    args:
+        armor {Armor} - the armor this is being inspected
+    return:
+        {list} - all lines describing the armor
+    '''
+    # list to be returned
+    lines = []
+    lines.append("_"*20)
+    lines.append(f"_-{armor.name}-_")
+    lines.append(f"Changes hp by {armor.hpFx}")
+    lines.append(f"Changes bow dammage by {armor.bowDmgFx}")
+    lines.append(f"Changes sword dammage by {armor.swordDmgFx}")
+    lines.append(f"Changes speed by {armor.speedFx}m")
+    lines.append("_"*20)
+    return lines
 
 # dictionary of all of the swords
 swordsDict = {
