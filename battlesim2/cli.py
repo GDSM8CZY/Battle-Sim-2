@@ -285,15 +285,6 @@ def playGame():
         return:
             none
     '''
-    # TEMPORARYLY REMOVED
-    # pick a name for you and the enemy
-    # print("_" * 20)
-    # enemyname = input("what is the enemy called?\n")
-    # playername = input("and what are you called?\n")
-    # if enemyname == "": enemyname = "enemy"
-    # if playername == "": playername = "player"
-    # print("_" * 20, "\n")
-
     # Assign the weapons to the fighters
     assignWeapons("Player", "Enemy")
 
@@ -376,8 +367,8 @@ def playGame():
             if inRange:
                 playerTurn = True
                 break
-            # if they don't attack or can't attack, 20% chance they don't chase you
-            elif not inRange and behaviorRandom <= 80:
+            # if they don't attack or can't attack, 10% chance they don't chase you
+            elif not inRange and behaviorRandom <= 90:
                 print("-They Chase You!-")
                 if distance - Enemy.speed < 1:
                     distance = 1
@@ -385,12 +376,12 @@ def playGame():
                 else:
                     distance -= Enemy.speed
                 playerTurn = True
-                # if they don't chase you, 10% chance they don't run
-            elif behaviorRandom <= 90:
+                # if they don't chase you, 5% chance they don't run
+            elif behaviorRandom <= 95:
                 print("-They Run From You!-")
                 distance += Enemy.speed
                 playerTurn = True
-                # if they don't do anything, they 'wait'
+                # if they don't do anything, they 'wait' or fail to run
             else:
                 if random.randint(1, 2) == 1:
                     print("-They wait for you-")
@@ -444,8 +435,6 @@ def main():
         elif select == "i" or select == "weapon info":
             # clear anything previously in the terminal
             os.system('cls' if os.name == 'nt' else 'clear')
-            # print title
-            print(title)
             # Show all the weapons
             showAllWeapons()
         elif select == "q" or select == "quit":

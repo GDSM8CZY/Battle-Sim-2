@@ -283,9 +283,9 @@ def weaponInfo(weapon):
       return:
         {list} - every line that needs to be printed
     '''
-    # lines to print
+    # list to be returned
     lines = []
-    lines.append("_"*20)
+    lines.append("_"*30)
     lines.append(f"_-{weapon.name}-_")
     lines.append(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Dammage-")
     lines.append(f"-{weapon.range[0]}m to {weapon.range[1]}m Range-")
@@ -293,7 +293,7 @@ def weaponInfo(weapon):
     lines.append(f"-{weapon.critChance}% Critical Hit Chance")
     lines.append(f"-Critical Hits do {weapon.critDmg}x Dammage")
     lines.append(f"-Hits {weapon.multiHit} Time(s)-")
-    lines.append("_"*20)
+    lines.append("_"*30)
     return lines
 
 # returns all the info about an armor
@@ -307,13 +307,13 @@ def armorInfo(armor):
     '''
     # list to be returned
     lines = []
-    lines.append("_"*20)
+    lines.append("_"*30)
     lines.append(f"_-{armor.name}-_")
     lines.append(f"Changes hp by {armor.hpFx}")
     lines.append(f"Changes bow dammage by {armor.bowDmgFx}")
     lines.append(f"Changes sword dammage by {armor.swordDmgFx}")
     lines.append(f"Changes speed by {armor.speedFx}m")
-    lines.append("_"*20)
+    lines.append("_"*30)
     return lines
 
 # dictionary of all of the swords
@@ -388,7 +388,7 @@ bowsDict = {
     "revolver": Weapon(
         name="Revolver",
         dmgRange=(2, 3),
-        range=(18, 23),
+        range=(20, 23),
         critChance=25,
         critDmg=2,
         accuracy=30,
