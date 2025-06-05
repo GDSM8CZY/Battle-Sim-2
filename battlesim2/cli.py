@@ -6,8 +6,6 @@ from battlesim2.core import Fighter, swordsDict, bowsDict, armorDict, weaponInfo
 from battlesim2.utils import listToMatrix, title, help
 
 
-
-
 # Prints all the info for the game
 def gameInfo():
     '''
@@ -107,9 +105,9 @@ def assignWeapons(playerName, enemyName):
             none
     '''
     # convert swordsDict and bowsDict to marticies
-    swordsMatrix = listToMatrix(list(swordsDict), 3)
-    bowsMatrix = listToMatrix(list(bowsDict), 3)
-    armorMatrix = listToMatrix(list(armorDict), 3)
+    swordsMatrix = listToMatrix(list(swordsDict), 5)
+    bowsMatrix = listToMatrix(list(bowsDict), 5)
+    armorMatrix = listToMatrix(list(armorDict), 5)
 
     # clear anything previously in the terminal
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -217,8 +215,8 @@ def showAllWeapons():
     '''
     os.system('cls' if os.name == 'nt' else 'clear')
     # convert swordsDict and bowsDict to marticies
-    swordsMatrix = listToMatrix(list(swordsDict), 4)
-    bowsMatrix = listToMatrix(list(bowsDict), 4)
+    swordsMatrix = listToMatrix(list(swordsDict), 5)
+    bowsMatrix = listToMatrix(list(bowsDict), 5)
     armorMatrix = listToMatrix(list(armorDict), 5)
     page = 0
 
