@@ -379,7 +379,7 @@ bowsDict = {
     "crossbow": Weapon(
         name="Crossbow",
         dmgRange=(3, 6),
-        range=(18, 20),
+        range=(16, 20),
         critChance=35,
         critDmg=2,
         accuracy=80,
@@ -388,7 +388,7 @@ bowsDict = {
     "revolver": Weapon(
         name="Revolver",
         dmgRange=(2, 3),
-        range=(10, 20),
+        range=(18, 23),
         critChance=25,
         critDmg=2,
         accuracy=30,
@@ -441,7 +441,7 @@ armorDict = {
         name="Cloak",
         hpFx=-5,
         speedFx=4,
-        bowDmgFx=0,
+        bowDmgFx=-2,
         swordDmgFx=2
     )
 }
