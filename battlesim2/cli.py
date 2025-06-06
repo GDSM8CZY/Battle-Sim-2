@@ -240,7 +240,6 @@ def assignWeapons(playerName, enemyName):
     # gives player the selected weapons
     global Player, Enemy
     Player = Fighter(swordSelect, bowSelect, armorSelect, playerName)
-    Player.read(False)
 
     # gives enemies random weapons
     Enemy = Fighter("", "", "", enemyName)
@@ -444,8 +443,6 @@ def playGame():
 
     input("Press ENTER to end")
 
-    Player.write()
-    Player.read(True)
 
 # main function
 def main():

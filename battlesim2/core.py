@@ -216,47 +216,6 @@ class Fighter():
             ]
             print("|".join(line))
 
-    def write(self):
-        '''
-        Write the data to the Player-stats file
-        args:
-            none
-        return:
-            none
-        '''
-        # creats stats file if not already created
-        try:
-            f = open(f"{self.name}-stats", "x")
-            # opens stats file if created
-        except:
-            f = open(f"{self.name}-stats", "w")
-
-        # writes to stats file
-        f.write(f"{self.gamesPlayed}\n{self.lastSword}\n{self.lastBow}")
-
-    def read(self, display):
-        '''
-        Gets data from the Player-stats file
-        args:
-            none
-        return:
-            none
-        '''
-        # try and read stats from the file
-        while True:
-            try:
-                f = open(f"{self.name}-stats", "r")
-                self.gamesPlayed = int(f.readline())
-                self.lastSword = f.readline()
-                self.lastBow = f.readline()
-                break
-            except:
-                self.write()
-
-        if display:
-            print(f"Games Played: {self.gamesPlayed}")
-
-
 # class for armor
 class Armor:
     def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
