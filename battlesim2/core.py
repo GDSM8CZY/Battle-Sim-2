@@ -351,8 +351,8 @@ swordsDict = {
         range=(1, 2),
         critChance=10,
         critDmg=2,
-        accuracy=75,
-        multiHit=4
+        accuracy=80,
+        multiHit=2
     ),
     "spear": Weapon(
         name="Spear",

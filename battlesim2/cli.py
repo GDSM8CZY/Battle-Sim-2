@@ -134,25 +134,28 @@ def assignWeapons(playerName, enemyName):
             os.system('cls' if os.name == 'nt' else 'clear')
         else:
             # select sword on input
-            # if the input is a number
-            if int(swordSelect) != ValueError:
+            # try to use a number
+            try:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                # set it to the sword at that number
                 swordSelect = int(swordSelect)
                 swordSelect = swordsDict[swordsMatrix[page][swordSelect-1]]
                 print(f"=-{swordSelect.name} Selected-=\n")
                 break
-            # if the sword is a name
-            elif swordsDict[swordSelect] != KeyError:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                # set it to the sword with that name
-                swordSelect = swordsDict[swordSelect]
-                print(f"=-{swordSelect.name} Selected-=\n")
-                break
-            # otherwise try again
-            else:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("-Something went wrong, try again!-\n")
+            # if there is a value error
+            except ValueError:
+                # try to check the key
+                try:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    swordSelect = swordsDict[swordSelect]
+                    print(f"=-{swordSelect.name} Selected-=\n")
+                    break
+                # if there is a key error loop again
+                except KeyError:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("-Something went wrong, try again!-\n")
+
+
+
 
     # Selection for bow
     print("Pick your bow!")
@@ -174,25 +177,25 @@ def assignWeapons(playerName, enemyName):
             os.system('cls' if os.name == 'nt' else 'clear')
         else:
             # select bow on input
-            # if the input is a number
-            if int(bowSelect) != ValueError:
+            # try to use a number
+            try:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                # set it to the bow at that number
                 bowSelect = int(bowSelect)
                 bowSelect = bowsDict[bowsMatrix[page][bowSelect-1]]
                 print(f"=-{bowSelect.name} Selected-=\n")
                 break
-            # if the bow is a name
-            elif bowsDict[bowSelect] != KeyError:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                # set it to the bow with that name
-                bowSelect = bowsDict[bowSelect]
-                print(f"=-{bowSelect.name} Selected-=\n")
-                break
-            # otherwise try again
-            else:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("-Something went wrong, try again!-\n")
+            # if there is a value error
+            except ValueError:
+                # try to check the key
+                try:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    bowSelect = bowsDict[bowSelect]
+                    print(f"=-{bowSelect.name} Selected-=\n")
+                    break
+                # if there is a key error loop again
+                except KeyError:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("-Something went wrong, try again!-\n")
 
     # Selection for armor
     print("Pick your armor!")
@@ -214,25 +217,25 @@ def assignWeapons(playerName, enemyName):
             os.system('cls' if os.name == 'nt' else 'clear')
         else:
             # select armor on input
-            # if the input is a number
-            if int(armorSelect) != ValueError:
+            # try to use a number
+            try:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                # set it to the armor at that number
                 armorSelect = int(armorSelect)
                 armorSelect = armorDict[armorMatrix[page][armorSelect-1]]
                 print(f"=-{armorSelect.name} Selected-=\n")
                 break
-            # if the armor is a name
-            elif armorDict[bowSelect] != KeyError:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                # set it to the armor with that name
-                armorSelect = armorDict[armorSelect]
-                print(f"=-{armorSelect.name} Selected-=\n")
-                break
-            # otherwise try again
-            else:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("-Something went wrong, try again!-\n")
+            # if there is a value error
+            except ValueError:
+                # try to check the key
+                try:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    armorSelect = armorDict[armorSelect]
+                    print(f"=-{armorSelect.name} Selected-=\n")
+                    break
+                # if there is a key error loop again
+                except KeyError:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("-Something went wrong, try again!-\n")
 
     # gives player the selected weapons
     global Player, Enemy
