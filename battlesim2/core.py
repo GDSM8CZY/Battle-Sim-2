@@ -287,11 +287,11 @@ def weaponInfo(weapon):
     lines = []
     lines.append("_"*30)
     lines.append(f"_-{weapon.name}-_")
-    lines.append(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Dammage-")
+    lines.append(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Damage-")
     lines.append(f"-{weapon.range[0]}m to {weapon.range[1]}m Range-")
     lines.append(f"-{weapon.accuracy}% Accuracy-")
     lines.append(f"-{weapon.critChance}% Critical Hit Chance")
-    lines.append(f"-Critical Hits do {weapon.critDmg}x Dammage")
+    lines.append(f"-Critical Hits do {weapon.critDmg}x Damage")
     lines.append(f"-Hits {weapon.multiHit} Time(s)-")
     lines.append("_"*30)
     return lines
