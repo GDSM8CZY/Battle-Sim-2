@@ -109,18 +109,18 @@ class Fighter():
                 # if they hit set hitDmg to regular hit dammage
                 if hit == "hit":
                     hitDmg = random.randint(self.sword.dmgRange[0], self.sword.dmgRange[1])
-                    print(f"-{self.name} hit {target.name} for {hitDmg} Dammage-")
+                    print(f"-{self.name} hit {target.name} for {hitDmg} Damage-")
                     # if they crit than use critical multiplyer
                 elif hit == "crit":
                     hitDmg = random.randint(self.sword.dmgRange[0], self.sword.dmgRange[1])
                     hitDmg *= self.sword.critDmg
-                    print(f"*-{self.name} Critical hit {target.name} for {hitDmg} Dammage!-*")
+                    print(f"*-{self.name} Critical hit {target.name} for {hitDmg} Damage!-*")
                     # if they miss do nothing
                 elif hit == "miss":
                     print(f"-{self.name} Missed!-")
                 # check for armor bonus not if they miss
                 if self.armor.swordDmgFx != 0 and hit != "miss":
-                    print(f"-Armor bonus {self.armor.swordDmgFx} Dammage-")
+                    print(f"-Armor effect {self.armor.swordDmgFx} Damage-")
                     hitDmg += self.armor.swordDmgFx
                 if target.health - hitDmg < 0:
                     target.health = 0
@@ -139,18 +139,18 @@ class Fighter():
                 # if the bow hits add to hitDmg
                 if hit == "hit":
                     hitDmg = random.randint(self.bow.dmgRange[0], self.bow.dmgRange[1])
-                    print(f"-{self.name} hit {target.name} for {hitDmg} Dammage-")
+                    print(f"-{self.name} hit {target.name} for {hitDmg} Damage-")
                     # if they crit than use critical multiplyer
                 elif hit == "crit":
                     hitDmg = random.randint(self.bow.dmgRange[0], self.bow.dmgRange[1])
                     hitDmg *= self.bow.critDmg
-                    print(f"*-{self.name} Critical hit {target.name} for {hitDmg} Dammage!-*")
+                    print(f"*-{self.name} Critical hit {target.name} for {hitDmg} Damage!-*")
                     # if they miss do nothing
                 elif hit == "miss":
                     print(f"-{self.name} Missed!-")
                 # check for armor bonus not if they miss
                 if self.armor.bowDmgFx != 0 and hit != "miss":
-                    print(f"-Armor bonus {self.armor.bowDmgFx} Dammage-")
+                    print(f"-Armor effect {self.armor.bowDmgFx} Damage-")
                     hitDmg += self.armor.bowDmgFx
                 # deal dammage, but don't go below 0
                 if target.health - hitDmg < 0:
@@ -287,11 +287,11 @@ def weaponInfo(weapon):
     lines = []
     lines.append("_"*30)
     lines.append(f"_-{weapon.name}-_")
-    lines.append(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Dammage-")
+    lines.append(f"-{weapon.dmgRange[0]} to {weapon.dmgRange[1]} Damage-")
     lines.append(f"-{weapon.range[0]}m to {weapon.range[1]}m Range-")
     lines.append(f"-{weapon.accuracy}% Accuracy-")
     lines.append(f"-{weapon.critChance}% Critical Hit Chance")
-    lines.append(f"-Critical Hits do {weapon.critDmg}x Dammage")
+    lines.append(f"-Critical Hits do {weapon.critDmg}x Damage")
     lines.append(f"-Hits {weapon.multiHit} Time(s)-")
     lines.append("_"*30)
     return lines
@@ -339,7 +339,7 @@ swordsDict = {
     "dagger": Weapon(
         name="Dagger",
         dmgRange=(4, 5),
-        range=(2, 4),
+        range=(1, 2),
         critChance=80,
         critDmg=2,
         accuracy=90,
@@ -348,7 +348,7 @@ swordsDict = {
     "knuckles": Weapon(
         name="Knuckles",
         dmgRange=(6, 7),
-        range=(2, 4),
+        range=(1, 2),
         critChance=10,
         critDmg=2,
         accuracy=75,

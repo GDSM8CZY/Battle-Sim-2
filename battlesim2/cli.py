@@ -105,9 +105,9 @@ def assignWeapons(playerName, enemyName):
             none
     '''
     # convert swordsDict and bowsDict to marticies
-    swordsMatrix = listToMatrix(list(swordsDict), 5)
-    bowsMatrix = listToMatrix(list(bowsDict), 5)
-    armorMatrix = listToMatrix(list(armorDict), 5)
+    swordsMatrix = listToMatrix(list(swordsDict), 4)
+    bowsMatrix = listToMatrix(list(bowsDict), 4)
+    armorMatrix = listToMatrix(list(armorDict), 4)
 
     # clear anything previously in the terminal
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -119,7 +119,10 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for sword in swordsMatrix[page]:
+            # index for each swords and the swords info
+            print(swordsMatrix[page].index(sword)+1)
             printInfo(swordsDict[sword])
+        # shows the different pages
         print(f"<Pg{page + 1}/{len(swordsMatrix)}>")
         swordSelect = input().lower()
         # logic for changeing pages
@@ -131,12 +134,23 @@ def assignWeapons(playerName, enemyName):
             os.system('cls' if os.name == 'nt' else 'clear')
         else:
             # select sword on input
-            try:
+            # if the input is a number
+            if int(swordSelect) != ValueError:
                 os.system('cls' if os.name == 'nt' else 'clear')
+                # set it to the sword at that number
+                swordSelect = int(swordSelect)
+                swordSelect = swordsDict[swordsMatrix[page][swordSelect-1]]
+                print(f"=-{swordSelect.name} Selected-=\n")
+                break
+            # if the sword is a name
+            elif swordsDict[swordSelect] != KeyError:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                # set it to the sword with that name
                 swordSelect = swordsDict[swordSelect]
                 print(f"=-{swordSelect.name} Selected-=\n")
                 break
-            except:
+            # otherwise try again
+            else:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("-Something went wrong, try again!-\n")
 
@@ -147,6 +161,7 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for bow in bowsMatrix[page]:
+            print(bowsMatrix[page].index(bow)+1)
             printInfo(bowsDict[bow])
         print(f"<Pg{page + 1}/{len(bowsMatrix)}>")
         bowSelect = input().lower()
@@ -158,13 +173,24 @@ def assignWeapons(playerName, enemyName):
             page -= 1
             os.system('cls' if os.name == 'nt' else 'clear')
         else:
-            # select sword on input
-            try:
+            # select bow on input
+            # if the input is a number
+            if int(bowSelect) != ValueError:
                 os.system('cls' if os.name == 'nt' else 'clear')
+                # set it to the bow at that number
+                bowSelect = int(bowSelect)
+                bowSelect = bowsDict[bowsMatrix[page][bowSelect-1]]
+                print(f"=-{bowSelect.name} Selected-=\n")
+                break
+            # if the bow is a name
+            elif bowsDict[bowSelect] != KeyError:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                # set it to the bow with that name
                 bowSelect = bowsDict[bowSelect]
                 print(f"=-{bowSelect.name} Selected-=\n")
                 break
-            except:
+            # otherwise try again
+            else:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("-Something went wrong, try again!-\n")
 
@@ -175,6 +201,7 @@ def assignWeapons(playerName, enemyName):
     while True:
         # print outs the page
         for armor in armorMatrix[page]:
+            print(armorMatrix[page].index(armor)+1)
             printInfo(armorDict[armor])
         print(f"<Pg{page + 1}/{len(armorMatrix)}>")
         armorSelect = input().lower()
@@ -186,13 +213,24 @@ def assignWeapons(playerName, enemyName):
             page -= 1
             os.system('cls' if os.name == 'nt' else 'clear')
         else:
-            # select sword on input
-            try:
+            # select armor on input
+            # if the input is a number
+            if int(armorSelect) != ValueError:
                 os.system('cls' if os.name == 'nt' else 'clear')
+                # set it to the armor at that number
+                armorSelect = int(armorSelect)
+                armorSelect = armorDict[armorMatrix[page][armorSelect-1]]
+                print(f"=-{armorSelect.name} Selected-=\n")
+                break
+            # if the armor is a name
+            elif armorDict[bowSelect] != KeyError:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                # set it to the armor with that name
                 armorSelect = armorDict[armorSelect]
                 print(f"=-{armorSelect.name} Selected-=\n")
                 break
-            except:
+            # otherwise try again
+            else:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("-Something went wrong, try again!-\n")
 
