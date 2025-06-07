@@ -5,6 +5,7 @@ This game is a simple text-based battle simulator that runs in the terminal, I u
 I want to make the game modular, with each function in a different file allowing people to learn about programing by changeing the code and seeing what happens. I also plan to creat a website at some point to have lessons that go through the instilation in-depth, how the files are structured, and what each function does.
 
 ## Instalation
+You can install the executable by going into the releases on the right side. It will only be avalible for some of the pre-releases for windows.
 You can install with pip or pipx, or any other method for installing python packages from GitHub repos.
 pip example:
 ```terminal
