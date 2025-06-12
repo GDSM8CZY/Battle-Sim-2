@@ -462,48 +462,73 @@ def main():
         Code for the main menu, also is the main function
     '''
 
+    # true if game is running
+    running = True
+
     # make a pygame screen  and font that are global
     global screen, font
-    screen = pygame.display.set_mode((640, 320))
+    screen = pygame.display.set_mode((1280, 640))
     font = pygame.font.SysFont(None, 10)
 
     # get BG and set to 5x scale
     background = files("battlesim2").joinpath("assets", "BG_lonePeak.png")
     background = pygame.image.load(str(background))
     background = pygame.transform.scale(background, (
-                                        background.get_width() * 2,
-                                        background.get_height() * 2))
+                                        background.get_width() * 4,
+                                        background.get_height() * 4))
 
     # create buttons
-    startBtn = pygame.Rect(700, 370, 100, 30)
+    startBtn = pygame.Rect(640, 110, 150, 50)
+    helpBtn = pygame.Rect(640, 180, 150, 50)
+    weaponInfoBtn = pygame.Rect(640, 250, 150, 50)
+    quitBtn = pygame.Rect(640, 320, 150, 50)
 
-    while True:
-        # clear anything previously in the terminal
-        os.system('cls' if os.name == 'nt' else 'clear')
-
+    while running:
         # Put the background on the screen
         screen.blit(background, (0, 0))
 
-        # draw the button
-        pygame.draw.rect(screen, (100, 100, 25), startBtn)
+        # draw the start button
+        pygame.draw.rect(screen, (150, 150, 25), startBtn)
         startText = font.render("Start", True, (255, 255, 255))
-        screen.blit(startText, (startBtn.x + 10, startBtn.y + 10))
+        screen.blit(startText, (startBtn.x + 20, startBtn.y + 20))
+
+        # draw the help button
+        pygame.draw.rect(screen, (150, 150, 25), helpBtn)
+        helpText = font.render("Help", True, (255, 255, 255))
+        screen.blit(helpText, (helpBtn.x + 20, helpBtn.y + 20))
+
+        # draw the wepon info button
+        pygame.draw.rect(screen, (150, 150, 25), weaponInfoBtn)
+        weaponInfoText = font.render("Weapon Info", True, (255, 255, 255))
+        screen.blit(weaponInfoText, (weaponInfoBtn.x + 20, weaponInfoBtn.y + 20))
+
+        # draw the quit button
+        pygame.draw.rect(screen, (150, 150, 25), quitBtn)
+        quitText = font.render("Quit", True, (255, 255, 255))
+        screen.blit(quitText, (quitBtn.x + 20, quitBtn.y + 20))
 
         # flip display
         pygame.display.flip()
 
-        # prints title in utils
-        print(title)
-
+        # check events
         for event in pygame.event.get():
+
+            # quit when window is closed
             if event.type == pygame.QUIT:
                 running = False
+
+            # detect clicks
             elif event.type == pygame.MOUSEBUTTONDOWN:
+
+                # clicked on start btn?
                 if startBtn.collidepoint(event.pos):
                     # clear anything previously in the terminal
                     os.system('cls' if os.name == 'nt' else 'clear')
                     # Start the game
                     playGame()
+
+                if quitBtn.collidepoint(event.pos):
+                    running = False
 
 #         # do specified action
 #         if select == "s" or select == "start game":
