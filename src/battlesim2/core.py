@@ -237,6 +237,35 @@ class Armor:
         self.swordDmgFx = swordDmgFx
         self.name = name
 
+# class for the buttons
+class Button:
+    def __init__(self, name, func):
+        '''
+        Class for every button in the game
+        args:
+            name {string} - the name of the button, or the text
+            func {function} - what the button will do when pressed
+        return:
+            none
+        '''
+        self.name = name
+        self.func = func
+
+    def placeBtn(screen, xPos, yPos):
+        '''
+        Places a button at a specified location
+        args:
+            screen {pygame.display} - the display to put the button on
+            xPos {int} - where it should be on the x axis
+            yPos {int} - where it should be on the y axis
+        return:
+            none
+        '''
+        button = pygame.Rect(xPos, yPos, 150, 50)
+        pygame.draw.rect(screen, (150, 150, 25), button)
+        text = font.render(self.name.title(), True, (255, 255, 255))
+        screen.blit(text, (button.x + 20, button.y + 20))
+
 # returns all the information for a weapon
 def weaponInfo(weapon):
     '''

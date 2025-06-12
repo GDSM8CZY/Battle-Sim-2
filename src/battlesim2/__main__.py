@@ -5,7 +5,7 @@ from time import sleep
 
 from importlib.resources import files
 
-from battlesim2.core import Fighter, swordsDict, bowsDict, armorDict, weaponInfo, armorInfo
+from battlesim2.core import Fighter, Button, swordsDict, bowsDict, armorDict, weaponInfo, armorInfo
 from battlesim2.utils import listToMatrix, title, help
 
 # intialize pygame
@@ -468,7 +468,7 @@ def main():
     # make a pygame screen  and font that are global
     global screen, font
     screen = pygame.display.set_mode((1280, 640))
-    font = pygame.font.SysFont(None, 10)
+    font = pygame.font.SysFont(None, 20)
 
     # get BG and set to 5x scale
     background = files("battlesim2").joinpath("assets", "BG_lonePeak.png")
