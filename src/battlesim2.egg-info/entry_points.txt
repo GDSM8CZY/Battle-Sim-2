@@ -1,0 +1,2 @@
+[console_scripts]
+battlesim2 = battlesim2.cli:main

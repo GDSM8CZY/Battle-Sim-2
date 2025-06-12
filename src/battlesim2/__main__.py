@@ -1,10 +1,16 @@
 import os
+import pygame
 import random
 from time import sleep
+
+from importlib.resources import files
 
 from battlesim2.core import Fighter, swordsDict, bowsDict, armorDict, weaponInfo, armorInfo
 from battlesim2.utils import listToMatrix, title, help
 
+# intialize pygame
+# not sure if it needs to be done here
+pygame.init()
 
 # Prints all the info for the game
 def gameInfo():
@@ -239,10 +245,14 @@ def assignWeapons(playerName, enemyName):
 
     # gives player the selected weapons
     global Player, Enemy
-    Player = Fighter(swordSelect, bowSelect, armorSelect, playerName)
+
+    # gets the path to player sprite and creates the player
+    playerSprite = files("battlesim2").joinpath("assets", "Player.png")
+    Player = Fighter(swordSelect, bowSelect, armorSelect, playerName, str(playerSprite))
 
     # gives enemies random weapons
-    Enemy = Fighter("", "", "", enemyName)
+    enemySprite = files("battlesim2").joinpath("assets", "Enemy.png")
+    Enemy = Fighter("", "", "", enemyName, str(playerSprite))
 
 # shows all the weapons
 def showAllWeapons():
@@ -334,9 +344,11 @@ def playGame():
     playerTurn = True
     playing = True
 
-    # Code inspired by my Python 1 project 'Battle Sim'
+
     # This is the game loop
     while playing:
+
+
         # Player turn actions
         while playerTurn:
             gameInfo()
@@ -449,34 +461,68 @@ def main():
     '''
         Code for the main menu, also is the main function
     '''
+
+    # make a pygame screen  and font that are global
+    global screen, font
+    screen = pygame.display.set_mode((640, 320))
+    font = pygame.font.SysFont(None, 10)
+
+    # get BG and set to 5x scale
+    background = files("battlesim2").joinpath("assets", "BG_lonePeak.png")
+    background = pygame.image.load(str(background))
+    background = pygame.transform.scale(background, (
+                                        background.get_width() * 2,
+                                        background.get_height() * 2))
+
+    # create buttons
+    startBtn = pygame.Rect(700, 370, 100, 30)
+
     while True:
         # clear anything previously in the terminal
         os.system('cls' if os.name == 'nt' else 'clear')
 
+        # Put the background on the screen
+        screen.blit(background, (0, 0))
+
+        # draw the button
+        pygame.draw.rect(screen, (100, 100, 25), startBtn)
+        startText = font.render("Start", True, (255, 255, 255))
+        screen.blit(startText, (startBtn.x + 10, startBtn.y + 10))
+
+        # flip display
+        pygame.display.flip()
+
         # prints title in utils
         print(title)
 
-        # get input
-        select = input("(S) Start Game\n(H) Help\n(I) Weapon Info\n(Q) Quit\n").lower()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if startBtn.collidepoint(event.pos):
+                    # clear anything previously in the terminal
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    # Start the game
+                    playGame()
 
-        # do specified action
-        if select == "s" or select == "start game":
-            # clear anything previously in the terminal
-            os.system('cls' if os.name == 'nt' else 'clear')
-            # Start the game
-            playGame()
-        elif select == "h" or select == "help":
-            # clear anything previously in the terminal
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print(title + help)
-            input("Press ENTER to close help")
-        elif select == "i" or select == "weapon info":
-            # clear anything previously in the terminal
-            os.system('cls' if os.name == 'nt' else 'clear')
-            # Show all the weapons
-            showAllWeapons()
-        elif select == "q" or select == "quit":
-            break
+#         # do specified action
+#         if select == "s" or select == "start game":
+#             # clear anything previously in the terminal
+#             os.system('cls' if os.name == 'nt' else 'clear')
+#             # Start the game
+#             playGame()
+#         elif select == "h" or select == "help":
+#             # clear anything previously in the terminal
+#             os.system('cls' if os.name == 'nt' else 'clear')
+#             print(title + help)
+#             input("Press ENTER to close help")
+#         elif select == "i" or select == "weapon info":
+#             # clear anything previously in the terminal
+#             os.system('cls' if os.name == 'nt' else 'clear')
+#             # Show all the weapons
+#             showAllWeapons()
+#         elif select == "q" or select == "quit":
+#             break
 
 
 if __name__ == '__main__':
