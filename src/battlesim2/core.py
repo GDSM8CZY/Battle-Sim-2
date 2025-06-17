@@ -2,6 +2,8 @@ import pygame
 import random
 from time import sleep
 
+from importlib.resources import files
+
 # Class for all of the weapons
 class Weapon():
     def __init__(self, name, dmgRange, range, critChance, critDmg, accuracy, multiHit):
@@ -224,7 +226,6 @@ class Fighter():
 class Armor:
     def __init__(self, hpFx, speedFx, bowDmgFx, swordDmgFx, name):
         '''
-        Creates a new armor piece
         args:
             hpFx {int} - the ammount it affects you hp
             speedFx {int} - the ammount it affects you speed
@@ -239,32 +240,40 @@ class Armor:
 
 # class for the buttons
 class Button:
-    def __init__(self, name, func):
+    def __init__(self, name, xPos, yPos):
         '''
-        Class for every button in the game
         args:
             name {string} - the name of the button, or the text
-            func {function} - what the button will do when pressed
-        return:
-            none
-        '''
-        self.name = name
-        self.func = func
-
-    def placeBtn(screen, xPos, yPos):
-        '''
-        Places a button at a specified location
-        args:
-            screen {pygame.display} - the display to put the button on
             xPos {int} - where it should be on the x axis
             yPos {int} - where it should be on the y axis
         return:
             none
         '''
-        button = pygame.Rect(xPos, yPos, 150, 50)
-        pygame.draw.rect(screen, (150, 150, 25), button)
+        self.name = name
+        self.rect = pygame.Rect(xPos, yPos, 148, 48)
+
+    def draw(self, screen, font):
+        '''
+        Places a button at a specified location
+        args:
+            screen {pygame.display} - the display to put the button on
+            font {pygame.font} - the font for the button text
+        return:
+            none
+        '''
+        # loading the sprite
+        sprite = files("battlesim2").joinpath("assets", "Button.png")
+        sprite = pygame.image.load(str(sprite))
+        sprite = pygame.transform.scale(sprite, (
+                                        sprite.get_width() * 4,
+                                        sprite.get_height() * 4
+        ))
+
+        # creating the button
+        pygame.draw.rect(screen, (255, 255, 255), self.rect)
         text = font.render(self.name.title(), True, (255, 255, 255))
-        screen.blit(text, (button.x + 20, button.y + 20))
+        screen.blit(sprite, (self.rect.x, self.rect.y))
+        screen.blit(text, (self.rect.x + 20, self.rect.y + 20))
 
 # returns all the information for a weapon
 def weaponInfo(weapon):

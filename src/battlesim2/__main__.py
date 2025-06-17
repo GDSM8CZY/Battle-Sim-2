@@ -39,16 +39,16 @@ def gameInfo():
 # print weapon info
 def printInfo(obj):
     '''
-    Take a weapon or armor object and prints it's info
+    Take a weapon or armor object and returns the rendered info
     args
         obj {Weapon} or {Armor} - object that is being inspected
     return:
-        none
+        {pygame font} - has all the info about an item
     '''
     if type(obj) == type(swordsDict['short sword']):
-        print("\n".join(weaponInfo(obj)))
+        return font.render("\n".join(weaponInfo(obj)))
     else:
-        print("\n".join(armorInfo(obj)))
+        return font.render("\n".join(armorInfo(obj)))
 
 
 def checkWin():
@@ -111,22 +111,18 @@ def assignWeapons(playerName, enemyName):
             none
     '''
     # convert swordsDict and bowsDict to marticies
-    swordsMatrix = listToMatrix(list(swordsDict), 4)
-    bowsMatrix = listToMatrix(list(bowsDict), 4)
-    armorMatrix = listToMatrix(list(armorDict), 4)
-
-    # clear anything previously in the terminal
-    os.system('cls' if os.name == 'nt' else 'clear')
+    swordsMatrix = listToMatrix(list(swordsDict), 2)
+    bowsMatrix = listToMatrix(list(bowsDict), 2)
+    armorMatrix = listToMatrix(list(armorDict), 2)
 
     # Selection for sword
-    print("Pick your sword!")
-    sleep(1)
+    text = font.render("Pick Your Sword!")
+    screen,blit(text, (20, 40))
     page = 0
     while True:
         # print outs the page
         for sword in swordsMatrix[page]:
             # index for each swords and the swords info
-            print(swordsMatrix[page].index(sword)+1)
             printInfo(swordsDict[sword])
         # shows the different pages
         print(f"<Pg{page + 1}/{len(swordsMatrix)}>")
@@ -263,7 +259,6 @@ def showAllWeapons():
     return:
         none
     '''
-    os.system('cls' if os.name == 'nt' else 'clear')
     # convert swordsDict and bowsDict to marticies
     swordsMatrix = listToMatrix(list(swordsDict), 5)
     bowsMatrix = listToMatrix(list(bowsDict), 5)
@@ -462,15 +457,19 @@ def main():
         Code for the main menu, also is the main function
     '''
 
-    # true if game is running
+    # basic variables to control the screen
     running = True
+    currentScreen = "menu"
 
-    # make a pygame screen  and font that are global
+    # make a pygame screen and font that are global
     global screen, font
     screen = pygame.display.set_mode((1280, 640))
     font = pygame.font.SysFont(None, 20)
 
-    # get BG and set to 5x scale
+    # make the clock
+    clock = pygame.time.Clock()
+
+    # get BG and set to 4x scale
     background = files("battlesim2").joinpath("assets", "BG_lonePeak.png")
     background = pygame.image.load(str(background))
     background = pygame.transform.scale(background, (
@@ -478,37 +477,17 @@ def main():
                                         background.get_height() * 4))
 
     # create buttons
-    startBtn = pygame.Rect(640, 110, 150, 50)
-    helpBtn = pygame.Rect(640, 180, 150, 50)
-    weaponInfoBtn = pygame.Rect(640, 250, 150, 50)
-    quitBtn = pygame.Rect(640, 320, 150, 50)
+    # main menu
+    helpBtn = Button("help", 20, 100)
+    weaponInfoBtn = Button("weapon info", 20, 160)
+    quitBtn = Button("quit", 20, 220)
+
+    # general
+    startBtn = Button("start", 20, 40)
+    backBtn = Button("Back to Menu", 20, 570)
+
 
     while running:
-        # Put the background on the screen
-        screen.blit(background, (0, 0))
-
-        # draw the start button
-        pygame.draw.rect(screen, (150, 150, 25), startBtn)
-        startText = font.render("Start", True, (255, 255, 255))
-        screen.blit(startText, (startBtn.x + 20, startBtn.y + 20))
-
-        # draw the help button
-        pygame.draw.rect(screen, (150, 150, 25), helpBtn)
-        helpText = font.render("Help", True, (255, 255, 255))
-        screen.blit(helpText, (helpBtn.x + 20, helpBtn.y + 20))
-
-        # draw the wepon info button
-        pygame.draw.rect(screen, (150, 150, 25), weaponInfoBtn)
-        weaponInfoText = font.render("Weapon Info", True, (255, 255, 255))
-        screen.blit(weaponInfoText, (weaponInfoBtn.x + 20, weaponInfoBtn.y + 20))
-
-        # draw the quit button
-        pygame.draw.rect(screen, (150, 150, 25), quitBtn)
-        quitText = font.render("Quit", True, (255, 255, 255))
-        screen.blit(quitText, (quitBtn.x + 20, quitBtn.y + 20))
-
-        # flip display
-        pygame.display.flip()
 
         # check events
         for event in pygame.event.get():
@@ -521,14 +500,74 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 # clicked on start btn?
-                if startBtn.collidepoint(event.pos):
+                if startBtn.rect.collidepoint(event.pos):
                     # clear anything previously in the terminal
                     os.system('cls' if os.name == 'nt' else 'clear')
                     # Start the game
                     playGame()
 
-                if quitBtn.collidepoint(event.pos):
+                # clicked the quit btn
+                if quitBtn.rect.collidepoint(event.pos):
+                    # end the program
                     running = False
+
+                # clicked the weapon info btn
+                if weaponInfoBtn.rect.collidepoint(event.pos):
+                    # change the current screen
+                    currentScreen = "weaponInfo"
+
+                    # get new BG and set to 4x scale
+                    background = files("battlesim2").joinpath("assets", "BG_menuFull.png")
+                    background = pygame.image.load(str(background))
+                    background = pygame.transform.scale(background, (
+                                                        background.get_width() * 4,
+                                                        background.get_height() * 4))
+
+                if backBtn.rect.collidepoint(event.pos):
+                    # change the current screen
+                    currentScreen = "menu"
+
+                    # get new BG and set to 4x scale
+                    background = files("battlesim2").joinpath("assets", "BG_lonePeak.png")
+                    background = pygame.image.load(str(background))
+                    background = pygame.transform.scale(background, (
+                                                        background.get_width() * 4,
+                                                        background.get_height() * 4))
+
+                if start.rect.collidepoint(event.pos):
+                    # change the current screen
+                    currentScreen = "weaponSelect"
+
+                    # get new BG and set to 4x scale
+                    background = files("battlesim2").joinpath("assets", "BG_menuFull.png")
+                    background = pygame.image.load(str(background))
+                    background = pygame.transform.scale(background, (
+                                                        background.get_width() * 4,
+                                                        background.get_height() * 4))
+
+        # Put the background on the screen
+        screen.blit(background, (0, 0))
+
+        # draw the buttons if on the menu screen
+        if currentScreen == "menu":
+            startBtn.draw(screen, font)
+            helpBtn.draw(screen, font)
+            weaponInfoBtn.draw(screen, font)
+            quitBtn.draw(screen, font)
+
+        # draw the button for the weapon info
+        if currentScreen == "weaponInfo":
+            startBtn.draw(screen, font)
+            backBtn.draw(screen, font)
+
+        if currentScreen == "weaponSelect":
+            backBtn.draw(screen, font)
+
+
+        # flip display
+        pygame.display.flip()
+
+        clock.tick(30)
 
 #         # do specified action
 #         if select == "s" or select == "start game":
